@@ -5,14 +5,33 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="794.0" prefWidth="1109.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iiitd.ac.ap_group17.willhero.HomeController">
    <children>
-      <AnchorPane layoutX="-3.0" layoutY="-2.0" prefHeight="649.0" prefWidth="710.0">
+      <AnchorPane layoutX="-3.0" layoutY="-2.0" prefHeight="800.0" prefWidth="1000.0">
          <children>
-            <ImageView fitHeight="582.0" fitWidth="763.0" layoutX="-6.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgBackground" fitHeight="800.0" fitWidth="1200.0" layoutX="-6.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../assets/cover_page.jpg" />
+               </image>
+            </ImageView>
+            <ImageView id="btnNewGame" fx:id="btnNewGame" fitHeight="122.0" fitWidth="263.0" layoutX="449.0" layoutY="547.0" onMouseClicked="#btnStartNewGameClicked" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../assets/controls/b_1_1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="btnSavedGame" fitHeight="150.0" fitWidth="200.0" layoutX="103.0" layoutY="623.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#btnSavedGameClicked">
+               <image>
+                  <Image url="@../../../../assets/controls/b_4_1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="btnOption" fitHeight="150.0" fitWidth="200.0" layoutX="820.0" layoutY="623.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#btnOptionClicked">
+               <image>
+                  <Image url="@../../../../assets/controls/b_4.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="btnExit" fitHeight="150.0" fitWidth="200.0" layoutX="473.0" layoutY="694.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#btnExitClicked">
+               <image>
+                  <Image url="@../../../../assets/controls/b_2_1.png" />
                </image>
             </ImageView>
          </children>
