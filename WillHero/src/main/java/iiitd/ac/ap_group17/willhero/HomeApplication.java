@@ -7,12 +7,16 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HelloApplication extends Application {
+public class HomeApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
+        FXMLLoader fxmlLoader = new FXMLLoader(HomeApplication.class.getResource("home.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1200, 800);
+
+        stage.setTitle("Will Hero");
+        stage.setFullScreen(false);
+        stage.setResizable(false);
+        stage.setMaximized(false);
         stage.setScene(scene);
         stage.show();
     }

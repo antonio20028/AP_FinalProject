@@ -3,7 +3,7 @@ package iiitd.ac.ap_group17.willhero;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+public class HomeController {
     @FXML
     private Label welcomeText;
 

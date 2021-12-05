@@ -8,6 +8,8 @@
     </JAVADOC>
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/org/apiguardian/apiguardian-api/1.1.0/apiguardian-api-1.1.0-sources.jar!/" />
+      <root url="file://$PATH_FX$" />
     </SOURCES>
+    <jarDirectory url="file://$PATH_FX$" recursive="false" type="SOURCES" />
   </library>
 </component>
