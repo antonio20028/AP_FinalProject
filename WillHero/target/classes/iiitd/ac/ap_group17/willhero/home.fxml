@@ -37,11 +37,5 @@
             </ImageView>
          </children>
       </AnchorPane>
-
-      <AnchorPane fx:id="gamePane" >
-         <children>
-            <Label text="Hello"/>
-         </children>
-      </AnchorPane>
    </children>
 </Pane>

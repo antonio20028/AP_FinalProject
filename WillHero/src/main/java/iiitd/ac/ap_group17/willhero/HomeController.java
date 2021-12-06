@@ -44,7 +44,7 @@ public class HomeController {
     protected void btnStartNewGameClicked() {
         startButtonIllusionAnimation(btnNewGame, 115, 255);
 
-       AnchorPane anchorPane = new AnchorPane();
+        AnchorPane anchorPane = new AnchorPane();
 
         gamePane = new AnchorPane(home);
         gamePane.getChildren().add(anchorPane);
@@ -60,7 +60,6 @@ public class HomeController {
 
         Timeline t = new Timeline(start, end);
         t.play();
-
 
     }
 
