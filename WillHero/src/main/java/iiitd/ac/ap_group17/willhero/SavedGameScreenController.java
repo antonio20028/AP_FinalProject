@@ -8,6 +8,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
+import java.util.Objects;
+
 public class SavedGameScreenController {
     @FXML
     private ImageView btnExit;
@@ -21,7 +23,7 @@ public class SavedGameScreenController {
 
     @FXML
     protected void btnExitClicked()  throws  Exception {
-        AnchorPane homeScreen = FXMLLoader.load(getClass().getResource("home.fxml"));
+        AnchorPane homeScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("home.fxml")));
         UIAnimationControl.startButtonIllusionAnimation(btnExit, 60, 50);
         savedGameScreen.getChildren().setAll(homeScreen);
     }

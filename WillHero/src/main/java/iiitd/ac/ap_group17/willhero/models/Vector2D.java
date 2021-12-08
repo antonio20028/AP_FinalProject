@@ -1,6 +1,9 @@
 package iiitd.ac.ap_group17.willhero.models;
 
 public class Vector2D {
+    private double x;
+    private double y;
+
     public double getX() {
         return x;
     }
@@ -21,8 +24,5 @@ public class Vector2D {
     public void setY(double y) {
         this.y = y;
     }
-
-    private double x;
-    private double y;
 
 }
