@@ -27,6 +27,11 @@
                <Font name="Franklin Gothic Book" size="50.0" />
             </font>
          </Label>
+         <ImageView fitHeight="46.0" fitWidth="49.0" layoutX="21.0" layoutY="526.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../../../assets/controls/btnHome.png" />
+            </image>
+         </ImageView>
       </children>
     </Pane>
 </AnchorPane>
