@@ -145,7 +145,7 @@ public class HomeController {
         coin1.setWidth(55);
         coin2.setHeight(55);
         coin2.setWidth(55);
-        //coin.getCoordinates().setX(20);
+
         coin1.getCoordinates().setX(75);
         coin2.getCoordinates().setX(150);
         coinsGroup.getChildren().add(coin.getPane());
