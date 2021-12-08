@@ -37,8 +37,11 @@ public class HomeController {
 
 
     @FXML
-    protected void btnStartNewGameClicked() {
+    protected void btnStartNewGameClicked() throws IOException {
+
+        AnchorPane gameScreen = FXMLLoader.load(getClass().getResource("gameScreen.fxml"));
         startButtonIllusionAnimation(btnNewGame, 115, 255);
+        homeRoot.getChildren().setAll(gameScreen);
 
     }
 

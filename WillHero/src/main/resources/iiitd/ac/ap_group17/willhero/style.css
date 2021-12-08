@@ -7,3 +7,8 @@
       -fx-background-image:url('https://raw.githubusercontent.com/antonio20028/assets/main/controls/banner.png');
      -fx-background-size: 100% 100%;
 }
+
+.inGame {
+    -fx-background-image:url('https://raw.githubusercontent.com/antonio20028/assets/main/background.jpg');
+    -fx-background-size: 100% 100%;
+}
