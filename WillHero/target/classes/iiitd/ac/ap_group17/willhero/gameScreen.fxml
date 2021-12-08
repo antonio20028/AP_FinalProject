@@ -12,7 +12,7 @@
             <URL value="@style.css" />
         </stylesheets>
       <children>
-         <Label fx:id="txtPlayerCoins" layoutX="75.0" layoutY="26.0" text="0" textFill="#d9ac17">
+         <Label fx:id="txtPlayerCoins" layoutX="75.0" layoutY="26.0" text="0" textFill="WHITE">
             <font>
                <Font name="Franklin Gothic Book" size="28.0" />
             </font>
@@ -22,14 +22,24 @@
                <Image url="@../../../../assets/controls/c.png" />
             </image>
          </ImageView>
-         <Label fx:id="txtPlayerPosition" layoutX="493.0" layoutY="30.0" text="0" textFill="#d9ac17">
+         <Label fx:id="txtPlayerPosition" layoutX="493.0" layoutY="30.0" text="0" textFill="WHITE">
             <font>
                <Font name="Franklin Gothic Book" size="50.0" />
             </font>
          </Label>
-         <ImageView fitHeight="46.0" fitWidth="49.0" layoutX="21.0" layoutY="526.0" pickOnBounds="true" preserveRatio="true">
+         <ImageView fx:id="btnHome" fitHeight="49.0" fitWidth="49.0" layoutX="21.0" layoutY="526.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#btnHomeClicked">
             <image>
                <Image url="@../../../../assets/controls/btnHome.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="btnPause" fitHeight="49.0" fitWidth="49.0" layoutX="83.0" layoutY="526.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#btnPauseClicked">
+            <image>
+               <Image url="@../../../../assets/controls/b_9.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="btnSave" fitHeight="49.0" fitWidth="49.0" layoutX="141.0" layoutY="526.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#btnSaveClicked">
+            <image>
+               <Image url="@../../../../assets/controls/b_10.png" />
             </image>
          </ImageView>
       </children>

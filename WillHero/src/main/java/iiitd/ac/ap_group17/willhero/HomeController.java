@@ -5,6 +5,7 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
@@ -35,19 +36,24 @@ public class HomeController {
     @FXML
     private ImageView btnOption;
 
+    @FXML
+    private ImageView btnGoHome;
+
+    @FXML
+    private AnchorPane optionMenuScreen;
 
     @FXML
     protected void btnStartNewGameClicked() throws IOException {
 
         AnchorPane gameScreen = FXMLLoader.load(getClass().getResource("gameScreen.fxml"));
-        startButtonIllusionAnimation(btnNewGame, 115, 255);
+        UIAnimationControl.startButtonIllusionAnimation(btnNewGame, 115, 255);
         homeRoot.getChildren().setAll(gameScreen);
 
     }
 
     @FXML
     protected void btnSavedGameClicked() throws IOException {
-            startButtonIllusionAnimation(btnSavedGame, 130, 190);
+            UIAnimationControl.startButtonIllusionAnimation(btnSavedGame, 130, 190);
             AnchorPane savedGameScreen = FXMLLoader.load(getClass().getResource("savedgame.fxml"));
             homeRoot.getChildren().setAll(savedGameScreen);
     }
@@ -55,36 +61,23 @@ public class HomeController {
 
     @FXML
     protected void btnOptionClicked() throws IOException {
-        AnchorPane optionDialogBox = FXMLLoader.load(getClass().getResource("optionDialogScreen.fxml"));
-        startButtonIllusionAnimation(btnOption, 130, 190);
-        homeRoot.getChildren().add(optionDialogBox);
+        UIAnimationControl.startButtonIllusionAnimation(btnOption, 130, 190);
+        optionMenuScreen.setVisible(true);
+
     }
 
     @FXML
     protected void btnExitClicked() {
-        startButtonIllusionAnimation(btnExit, 130, 190);
+        UIAnimationControl.startButtonIllusionAnimation(btnExit, 130, 190);
         System.exit(0);
     }
 
 
-
-    private  void startButtonIllusionAnimation(ImageView btn, double height, double width) {
-
-        double _h = btn.getFitHeight();
-        double _w = btn.getFitWidth();
-        Timeline timeline = new Timeline();
-        timeline.setCycleCount(2);
-        timeline.setAutoReverse(true);
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(100), actionEvent -> {
-            btn.setFitHeight(height);
-            btn.setFitWidth(width);
-        }));
-
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(200), actionEvent -> {
-            btn.setFitHeight(_h);
-            btn.setFitWidth(_w);
-        }));
-
-        timeline.play();
+    @FXML
+    protected void btnGoHomeClicked() throws IOException {
+        UIAnimationControl.startButtonIllusionAnimation(btnGoHome, 50, 50);
+        optionMenuScreen.setVisible(false);
     }
+
+
 }
