@@ -6,6 +6,7 @@ import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -26,7 +27,7 @@ public class HomeController {
     private ImageView btnExit;
 
     @FXML
-    private AnchorPane home;
+    private AnchorPane homeRoot;
 
     @FXML
     private ImageView btnSavedGame;
@@ -34,47 +35,32 @@ public class HomeController {
     @FXML
     private ImageView btnOption;
 
-    @FXML
-    private AnchorPane gamePane;
 
     @FXML
     protected void btnStartNewGameClicked() {
         startButtonIllusionAnimation(btnNewGame, 115, 255);
 
-        AnchorPane anchorPane = new AnchorPane();
-
-        gamePane = new AnchorPane(home);
-        gamePane.getChildren().add(anchorPane);
-
-        KeyFrame start = new KeyFrame(Duration.ZERO,
-                new KeyValue(gamePane.translateXProperty(), gamePane.getWidth()),
-                new KeyValue(home.translateXProperty(), 0));
-
-        KeyFrame end = new KeyFrame(Duration.seconds(1),
-                new KeyValue(gamePane.translateXProperty(), 0),
-                new KeyValue(home.translateXProperty(), -gamePane.getWidth())
-        );
-
-        Timeline t = new Timeline(start, end);
-        t.play();
-
     }
 
-
     @FXML
-    protected void btnSavedGameClicked() {
+    protected void btnSavedGameClicked() throws IOException {
             startButtonIllusionAnimation(btnSavedGame, 130, 190);
+            AnchorPane savedGameScreen = FXMLLoader.load(getClass().getResource("savedgame.fxml"));
+            homeRoot.getChildren().setAll(savedGameScreen);
     }
 
 
     @FXML
-    protected void btnOptionClicked() {
+    protected void btnOptionClicked() throws IOException {
+        DialogPane optionDialogBox = FXMLLoader.load(getClass().getResource("optionDialogScreen.fxml"));
         startButtonIllusionAnimation(btnOption, 130, 190);
+        homeRoot.getChildren().add(optionDialogBox);
     }
 
     @FXML
     protected void btnExitClicked() {
         startButtonIllusionAnimation(btnExit, 130, 190);
+        System.exit(0);
     }
 
 

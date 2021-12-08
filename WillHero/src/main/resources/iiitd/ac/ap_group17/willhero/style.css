@@ -2,3 +2,8 @@
     -fx-background-image:url('https://raw.githubusercontent.com/antonio20028/assets/main/cover%20page.jpg');
     -fx-background-size: 100% 100%;
 }
+
+.dialog {
+      -fx-background-image:url('https://raw.githubusercontent.com/antonio20028/assets/main/controls/banner.png');
+     -fx-background-size: 100% 100%;
+}

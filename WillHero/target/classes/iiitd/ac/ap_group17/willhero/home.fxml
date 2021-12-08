@@ -4,37 +4,31 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iiitd.ac.ap_group17.willhero.HomeController">
+<AnchorPane fx:id="homeRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="coverBackground" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iiitd.ac.ap_group17.willhero.HomeController">
+   <stylesheets>
+      <URL value="@style.css" />
+   </stylesheets>
    <children>
-      <AnchorPane fx:id="home" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="coverBackground">
-         <stylesheets>
-            <URL value="@style.css" />
-         </stylesheets>
-         <children>
-            <ImageView id="btnNewGame" fx:id="btnNewGame" fitHeight="122.0" fitWidth="263.0" layoutX="383.0" layoutY="268.0" onMouseClicked="#btnStartNewGameClicked" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../assets/controls/b_1_1.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="btnSavedGame" fitHeight="150.0" fitWidth="200.0" layoutX="37.0" layoutY="344.0" onMouseClicked="#btnSavedGameClicked" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../assets/controls/b_4_1.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="btnOption" fitHeight="150.0" fitWidth="200.0" layoutX="754.0" layoutY="344.0" onMouseClicked="#btnOptionClicked" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../assets/controls/b_4.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="btnExit" fitHeight="150.0" fitWidth="200.0" layoutX="407.0" layoutY="415.0" onMouseClicked="#btnExitClicked" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../assets/controls/b_2_1.png" />
-               </image>
-            </ImageView>
-         </children>
-      </AnchorPane>
+      <ImageView id="btnNewGame" fx:id="btnNewGame" fitHeight="122.0" fitWidth="263.0" layoutX="383.0" layoutY="268.0" onMouseClicked="#btnStartNewGameClicked" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../assets/controls/b_1_1.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="btnSavedGame" fitHeight="150.0" fitWidth="200.0" layoutX="37.0" layoutY="344.0" onMouseClicked="#btnSavedGameClicked" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../assets/controls/b_4_1.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="btnOption" fitHeight="150.0" fitWidth="200.0" layoutX="754.0" layoutY="344.0" onMouseClicked="#btnOptionClicked" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../assets/controls/b_4.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="btnExit" fitHeight="150.0" fitWidth="200.0" layoutX="407.0" layoutY="415.0" onMouseClicked="#btnExitClicked" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../assets/controls/b_2_1.png" />
+         </image>
+      </ImageView>
    </children>
-</VBox>
+</AnchorPane>

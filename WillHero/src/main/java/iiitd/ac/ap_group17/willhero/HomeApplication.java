@@ -17,14 +17,13 @@ public class HomeApplication extends Application {
 
 
         Rectangle2D bounds = Screen.getPrimary().getBounds();
-        FXMLLoader fxmlLoader = new FXMLLoader(HomeApplication.class.getResource("savedgame.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HomeApplication.class.getResource("home.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1000, 600);
         stage.setTitle("Will Hero");
         stage.setFullScreen(false);
         stage.setResizable(false);
         stage.setMaximized(false);
         stage.setScene(scene);
-
 
         stage.show();
     }
