@@ -26,9 +26,6 @@ public class HomeController {
     private ImageView btnExit;
 
     @FXML
-    private Label lbl;
-
-    @FXML
     private AnchorPane home;
 
     @FXML
@@ -79,6 +76,9 @@ public class HomeController {
     protected void btnExitClicked() {
         startButtonIllusionAnimation(btnExit, 130, 190);
     }
+
+
+
     private  void startButtonIllusionAnimation(ImageView btn, double height, double width) {
 
         double _h = btn.getFitHeight();
