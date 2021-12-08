@@ -55,7 +55,7 @@ public class HomeController {
 
     @FXML
     protected void btnOptionClicked() throws IOException {
-        DialogPane optionDialogBox = FXMLLoader.load(getClass().getResource("optionDialogScreen.fxml"));
+        AnchorPane optionDialogBox = FXMLLoader.load(getClass().getResource("optionDialogScreen.fxml"));
         startButtonIllusionAnimation(btnOption, 130, 190);
         homeRoot.getChildren().add(optionDialogBox);
     }

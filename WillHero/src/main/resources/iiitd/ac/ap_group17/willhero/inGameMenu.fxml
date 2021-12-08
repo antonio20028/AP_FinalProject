@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane fx:id="inGameMenu" layoutX="300" layoutY="100" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="314.0" prefWidth="468.0" style="-fx-background-radius: 50;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iiitd.ac.ap_group17.willhero.InGameMenuController">
+    <children>
+        <ImageView fitHeight="314.0" fitWidth="468.0" layoutX="19.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../../assets/controls/banner.png" />
+            </image>
+        </ImageView>
+    </children>
+</AnchorPane>
