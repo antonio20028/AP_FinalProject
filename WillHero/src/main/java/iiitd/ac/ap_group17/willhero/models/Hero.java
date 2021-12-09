@@ -5,18 +5,28 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
-public class Hero extends Character{
+public class Hero extends Character implements Jumpable{
 
     public Hero(String path) {
         super(path);
     }
 
-    public void startJump() {
+    private void startJump() {
         Timeline timeline = new Timeline();
         timeline.setAutoReverse(true);
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5), new KeyValue(this.getPane().translateYProperty(), -(this.getHeight() + 15))));
         timeline.play();
+    }
+
+    @Override
+    public void move() {
+        super.move();
+    }
+
+    @Override
+    public void jump() {
+        startJump();
     }
 
 }

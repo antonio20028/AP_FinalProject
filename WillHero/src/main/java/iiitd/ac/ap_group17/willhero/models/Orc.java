@@ -16,4 +16,9 @@ public class Orc extends Character implements Cloneable{
         this.color = color;
     }
 
+    @Override
+    public void move() {
+        super.move();
+    }
+
 }

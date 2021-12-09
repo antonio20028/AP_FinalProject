@@ -57,31 +57,51 @@ public class HomeController {
     private void initGame() throws IOException{
         gameScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("gameScreen.fxml")));
         Island islandStart = new Island();
+        Island island = new Island();
+        RedOrc redorc = new RedOrc();
         FloatingIsland floatingIsland = new FloatingIsland();
-
         Hero hero = new Hero("/assets/player.png");
+
         hero.getCoordinates().setY(327);
-        hero.getCoordinates().setX(200);
+        hero.getCoordinates().setX(100);
         hero.setHeight(68);
         hero.setWidth(75);
 
-        islandStart.getCoordinates().setX(200);
+        redorc.getCoordinates().setX(floatingIsland.getCoordinates().getX()+50);
+        redorc.getCoordinates().setY(378);
+
+        islandStart.getCoordinates().setX(100);
         islandStart.getCoordinates().setY(390);
 
 
+        island.getCoordinates().setX(floatingIsland.getCoordinates().getX());
+        island.getCoordinates().setY(440);
+
         islandStart.setHeight(100);
         islandStart.setWidth(200);
-        hero.startJump();
-       // loadIslands();
-        hero.mountImage();
-        islandStart.mountImage();
 
+        island.setHeight(100);
+        island.setWidth(200);
+
+        hero.jump();
+        redorc.jump();
+       //loadIslands();
+        hero.mountImage();
+        redorc.mountImage();
+        islandStart.mountImage();
+        island.mountImage();
         loadCoins();
+
+        //hero.fall();
         gameScreen.getChildren().add(floatingIsland.getPane());
         gameScreen.getChildren().add(hero.getPane());
+        gameScreen.getChildren().add(redorc.getPane());
         gameScreen.getChildren().add(islandStart.getPane());
+        gameScreen.getChildren().add(island.getPane());
+
 
     }
+
     @FXML
     protected void btnStartNewGameClicked() {
         UIAnimationControl.startButtonIllusionAnimation(btnNewGame, 115, 255);
@@ -139,10 +159,10 @@ public class HomeController {
 
     private void loadCoins() {
 
-        for(int i = 0; i < 2; i++) {
+        for(int i = 0; i < 1; i++) {
             CoinSet coinSet = new CoinSet();
-            coinSet.setLayoutX(new Random().nextDouble(510, 600));
-            coinSet.setLayoutY(new Random().nextDouble(290, 500));
+            coinSet.setLayoutX(new Random().nextDouble(560, 600));
+            coinSet.setLayoutY(new Random().nextDouble(270, 300));
 
             gameScreen.getChildren().add(coinSet);
         }

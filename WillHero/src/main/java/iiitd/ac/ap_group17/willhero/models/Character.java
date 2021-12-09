@@ -29,7 +29,7 @@ public class Character extends RigidiBody {
         Timeline timeline = new Timeline();
         timeline.setCycleCount(1);
         timeline.setAutoReverse(false);
-        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(2), new KeyValue(this.getPane().translateYProperty(), 1000)));
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(3.5), new KeyValue(this.getPane().translateYProperty(), 1000)));
         timeline.play();
     }
 }

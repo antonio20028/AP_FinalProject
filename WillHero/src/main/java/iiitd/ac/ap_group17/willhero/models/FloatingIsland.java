@@ -13,7 +13,7 @@ public class FloatingIsland extends Island {
         this.getCoordinates().setX(550);
         this.getCoordinates().setY(175);
         this.mountImage();
-        this.floatAnimation();
+        move();
     }
 
     private void  floatAnimation() {
@@ -22,5 +22,10 @@ public class FloatingIsland extends Island {
         timeline.setAutoReverse(true);
         timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(2), new KeyValue(this.getPane().translateYProperty(), 20)));
         timeline.play();
+    }
+
+    @Override
+    public void move() {
+        this.floatAnimation();
     }
 }
