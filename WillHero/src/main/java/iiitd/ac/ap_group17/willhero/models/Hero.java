@@ -7,7 +7,6 @@ import javafx.util.Duration;
 
 public class Hero extends Character{
 
-
     public Hero(String path) {
         super(path);
     }

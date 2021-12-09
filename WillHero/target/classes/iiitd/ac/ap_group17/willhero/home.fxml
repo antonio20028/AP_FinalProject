@@ -29,7 +29,7 @@
             <Image url="@../../../../assets/controls/b_2_1.png" />
          </image>
       </ImageView>
-      <AnchorPane fx:id="optionMenuScreen" visible="false" layoutX="276.0" layoutY="143.0" prefHeight="200.0" prefWidth="200.0">
+      <AnchorPane fx:id="optionMenuScreen" layoutX="276.0" layoutY="143.0" prefHeight="200.0" prefWidth="200.0" visible="false">
          <children>
             <ImageView fitHeight="314.0" fitWidth="468.0" layoutX="19.0" pickOnBounds="true" preserveRatio="true">
                <image>

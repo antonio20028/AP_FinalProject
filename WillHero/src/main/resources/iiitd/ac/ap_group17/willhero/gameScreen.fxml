@@ -6,8 +6,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="gameScreen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iiitd.ac.ap_group17.willhero.GameScreenController">
-    <Pane fx:id="backgroundImage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="inGame">
+<AnchorPane fx:id="gameScreen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#move" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iiitd.ac.ap_group17.willhero.GameScreenController">
+    <Pane fx:id="backgroundImage" layoutX="-6.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="inGame">
         <stylesheets>
             <URL value="@style.css" />
         </stylesheets>
@@ -27,17 +27,18 @@
                <Font name="Franklin Gothic Book" size="50.0" />
             </font>
          </Label>
-         <ImageView fx:id="btnHome" fitHeight="49.0" fitWidth="49.0" layoutX="21.0" layoutY="526.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#btnHomeClicked">
+      
+         <ImageView fx:id="btnHome" fitHeight="49.0" fitWidth="49.0" layoutX="21.0" layoutY="533.0" onMouseClicked="#btnHomeClicked" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@../../../../assets/controls/btnHome.png" />
             </image>
          </ImageView>
-         <ImageView fx:id="btnPause" fitHeight="49.0" fitWidth="49.0" layoutX="83.0" layoutY="526.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#btnPauseClicked">
+         <ImageView fx:id="btnPause" fitHeight="49.0" fitWidth="49.0" layoutX="75.0" layoutY="533.0" onMouseClicked="#btnPauseClicked" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@../../../../assets/controls/b_9.png" />
             </image>
          </ImageView>
-         <ImageView fx:id="btnSave" fitHeight="49.0" fitWidth="49.0" layoutX="141.0" layoutY="526.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#btnSaveClicked">
+         <ImageView fx:id="btnSave" fitHeight="49.0" fitWidth="49.0" layoutX="124.0" layoutY="533.0" onMouseClicked="#btnSaveClicked" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@../../../../assets/controls/b_10.png" />
             </image>

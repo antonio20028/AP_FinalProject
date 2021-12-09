@@ -1,5 +1,5 @@
 package iiitd.ac.ap_group17.willhero.models;
 
-interface Collectable extends Cloneable {
+interface Collectable <T> extends Cloneable {
 
 }

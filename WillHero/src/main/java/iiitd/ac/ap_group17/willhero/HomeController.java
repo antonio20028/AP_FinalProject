@@ -1,8 +1,6 @@
 package iiitd.ac.ap_group17.willhero;
 
-import iiitd.ac.ap_group17.willhero.models.Coin;
-import iiitd.ac.ap_group17.willhero.models.Hero;
-import iiitd.ac.ap_group17.willhero.models.Island;
+import iiitd.ac.ap_group17.willhero.models.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -53,29 +51,36 @@ public class HomeController {
     private AnchorPane gameScreen;
 
     static ArrayList<Island> islands = new ArrayList<>();
-    static ArrayList<Group> coins = new ArrayList<>();
+    static ArrayList<CoinSet> coins = new ArrayList<>();
+    static MenuAnimationController menuAnimationController = new MenuAnimationController();
 
-    private void initGame() throws IOException {
+    private void initGame() throws IOException{
         gameScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("gameScreen.fxml")));
         Island islandStart = new Island();
+        FloatingIsland floatingIsland = new FloatingIsland();
 
         Hero hero = new Hero("/assets/player.png");
-
         hero.getCoordinates().setY(327);
-        hero.getCoordinates().setX(208.0580462158324);
+        hero.getCoordinates().setX(200);
         hero.setHeight(68);
         hero.setWidth(75);
+
         islandStart.getCoordinates().setX(200);
         islandStart.getCoordinates().setY(390);
+
+
         islandStart.setHeight(100);
         islandStart.setWidth(200);
         hero.startJump();
-        //loadIslands();
+       // loadIslands();
         hero.mountImage();
         islandStart.mountImage();
+
         loadCoins();
+        gameScreen.getChildren().add(floatingIsland.getPane());
         gameScreen.getChildren().add(hero.getPane());
         gameScreen.getChildren().add(islandStart.getPane());
+
     }
     @FXML
     protected void btnStartNewGameClicked() {
@@ -99,8 +104,8 @@ public class HomeController {
     @FXML
     protected void btnOptionClicked() throws IOException {
         UIAnimationControl.startButtonIllusionAnimation(btnOption, 130, 190);
-        optionMenuScreen.setVisible(true);
-
+        menuAnimationController.setMenu(optionMenuScreen);
+        menuAnimationController.play();
     }
 
     @FXML
@@ -113,7 +118,7 @@ public class HomeController {
     @FXML
     protected void btnGoHomeClicked() throws IOException {
         UIAnimationControl.startButtonIllusionAnimation(btnGoHome, 50, 50);
-        optionMenuScreen.setVisible(false);
+        menuAnimationController.reverse();
     }
 
     private void loadIslands() {
@@ -133,43 +138,14 @@ public class HomeController {
     }
 
     private void loadCoins() {
-        Group coinsGroup = new Group();
 
-        Coin coin = new Coin();
-        Coin coin1 = new Coin();
-        Coin coin2 = new Coin();
+        for(int i = 0; i < 2; i++) {
+            CoinSet coinSet = new CoinSet();
+            coinSet.setLayoutX(new Random().nextDouble(510, 600));
+            coinSet.setLayoutY(new Random().nextDouble(290, 500));
 
-        coin.setHeight(55);
-        coin.setWidth(55);
-        coin1.setHeight(55);
-        coin1.setWidth(55);
-        coin2.setHeight(55);
-        coin2.setWidth(55);
+            gameScreen.getChildren().add(coinSet);
+        }
 
-        coin1.getCoordinates().setX(75);
-        coin2.getCoordinates().setX(150);
-        coinsGroup.getChildren().add(coin.getPane());
-        coinsGroup.getChildren().add(coin1.getPane());
-        coinsGroup.getChildren().add(coin2.getPane());
-
-        coin.mountImage(); coin1.mountImage(); coin2.mountImage();
-
-        coinsGroup.setLayoutX(460);
-        coinsGroup.setLayoutY(200);
-
-        gameScreen.getChildren().add(coinsGroup);
-
-       /*
-        double positionX = new Random().nextDouble(215, 700);
-        double positionY = new Random().nextDouble(410, 700);
-        for (Coin c:coins) {
-            c.getCoordinates().setX(positionX + 15);
-            c.getCoordinates().setY(positionY);
-            c.setHeight(55);
-            c.setWidth(55);
-            c.mountImage();
-            System.out.println(c.getCoordinates().getX() + ", " +c.getCoordinates().getY());
-            gameScreen.getChildren().add(c.getPane());
-        }*/
     }
 }
