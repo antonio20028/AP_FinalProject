@@ -10,7 +10,7 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public class Treasure <T extends Collectable> extends RigidiBody {
-    private ArrayList<T> collectables;
+    private ArrayList<T> collectables = new ArrayList<>();
     private String path2;
 
     public Treasure(String path, String path2) {

@@ -4,10 +4,10 @@ public class Orc extends Character implements Cloneable{
     private String color;
 
     public Orc(String color,String path) {
-
         super(path);
         this.color = color;
     }
+
     public String getColor() {
         return color;
     }

@@ -13,6 +13,7 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -48,28 +49,43 @@ public class HomeController {
     private AnchorPane optionMenuScreen;
 
     @FXML
-    private AnchorPane gameScreen;
+    static AnchorPane gameScreen;
 
     static ArrayList<Island> islands = new ArrayList<>();
     static ArrayList<CoinSet> coins = new ArrayList<>();
     static MenuAnimationController menuAnimationController = new MenuAnimationController();
+    static Hero hero = new Hero("/assets/helmet/player.png");
+   // static AnchorPane gameScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("gameScreen.fxml")));
+    private void initGame(MouseEvent event) throws IOException{
 
-    private void initGame() throws IOException{
         gameScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("gameScreen.fxml")));
         Island islandStart = new Island();
         Island island = new Island();
+        Island island1 = new Island();
         RedOrc redorc = new RedOrc();
+        GreenOrc greenOrc = new GreenOrc();
+
+        TreasureWeapon treasureWeapon = new TreasureWeapon();
+
+        TNT tnt = new TNT();
+
         Boss boss = new Boss();
         FloatingIsland floatingIsland = new FloatingIsland();
-        Hero hero = new Hero("/assets/helmet/player.png");
 
         hero.getCoordinates().setY(327);
         hero.getCoordinates().setX(100);
         hero.setHeight(68);
         hero.setWidth(75);
 
-        redorc.getCoordinates().setX(floatingIsland.getCoordinates().getX()+50);
+        redorc.getCoordinates().setX(floatingIsland.getCoordinates().getX()-60);
         redorc.getCoordinates().setY(378);
+        greenOrc.getCoordinates().setX(floatingIsland.getCoordinates().getX() + 40);
+        greenOrc.getCoordinates().setY(378);
+
+        treasureWeapon.getCoordinates().setX(750);
+        treasureWeapon.getCoordinates().setY(328);
+        tnt.getCoordinates().setX(900);
+        tnt.getCoordinates().setY(350);
 
         boss.getCoordinates().setX(floatingIsland.getCoordinates().getX());
         boss.getCoordinates().setY(100);
@@ -77,8 +93,11 @@ public class HomeController {
         islandStart.getCoordinates().setX(100);
         islandStart.getCoordinates().setY(390);
 
-        island.getCoordinates().setX(floatingIsland.getCoordinates().getX());
+        island.getCoordinates().setX(floatingIsland.getCoordinates().getX() - 100);
         island.getCoordinates().setY(440);
+
+        island1.getCoordinates().setY(400);
+        island1.getCoordinates().setX(floatingIsland.getCoordinates().getX() + 200);
 
         islandStart.setHeight(100);
         islandStart.setWidth(200);
@@ -86,33 +105,45 @@ public class HomeController {
         island.setHeight(90);
         island.setWidth(200);
 
+        island1.setHeight(100);
+        island1.setWidth(250);
+
         hero.jump();
         redorc.jump();
         boss.jump();
-       //loadIslands();
+        greenOrc.jump();
+
+
+        greenOrc.mountImage();
         hero.mountImage();
         redorc.mountImage();
         boss.mountImage();
         islandStart.mountImage();
+        island1.mountImage();
+        treasureWeapon.mountImage();
         island.mountImage();
-        loadCoins();
+        tnt.mountImage();
 
-        //hero.fall();
+        loadCoins();
+        System.out.println(event.getEventType());
         gameScreen.getChildren().add(floatingIsland.getPane());
         gameScreen.getChildren().add(hero.getPane());
         gameScreen.getChildren().add(redorc.getPane());
         gameScreen.getChildren().add(islandStart.getPane());
         gameScreen.getChildren().add(island.getPane());
         gameScreen.getChildren().add(boss.getPane());
-
+        gameScreen.getChildren().add(treasureWeapon.getPane());
+        gameScreen.getChildren().add(island1.getPane());
+        gameScreen.getChildren().add(tnt.getPane());
+        gameScreen.getChildren().add(greenOrc.getPane());
 
     }
 
     @FXML
-    protected void btnStartNewGameClicked() {
+    protected void btnStartNewGameClicked(MouseEvent event) {
         UIAnimationControl.startButtonIllusionAnimation(btnNewGame, 115, 255);
         try {
-            initGame();
+            initGame(event);
             homeRoot.getChildren().setAll(gameScreen);
         } catch (IOException e){
             System.out.println("cant start the game");
@@ -167,7 +198,7 @@ public class HomeController {
 
         for(int i = 0; i < 1; i++) {
             CoinSet coinSet = new CoinSet();
-            coinSet.setLayoutX(new Random().nextDouble(560, 600));
+            coinSet.setLayoutX(new Random().nextDouble(400, 500));
             coinSet.setLayoutY(new Random().nextDouble(270, 300));
 
             gameScreen.getChildren().add(coinSet);
