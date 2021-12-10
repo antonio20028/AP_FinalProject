@@ -1,5 +1,6 @@
 package iiitd.ac.ap_group17.willhero.models;
 
+import iiitd.ac.ap_group17.willhero.HomeController;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -12,6 +13,11 @@ public class Hero extends Character implements Jumpable{
 
     public Hero(String path) {
         super(path);
+
+    }
+
+    public ArrayList<Weapon> getWeapons() {
+        return weapons;
     }
 
     private void startJump() {

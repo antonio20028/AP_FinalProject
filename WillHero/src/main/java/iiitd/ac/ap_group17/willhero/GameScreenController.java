@@ -2,22 +2,18 @@ package iiitd.ac.ap_group17.willhero;
 
 import iiitd.ac.ap_group17.willhero.models.Rocket;
 import iiitd.ac.ap_group17.willhero.models.Weapon;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.function.UnaryOperator;
 
 public class GameScreenController {
 
@@ -39,7 +35,6 @@ public class GameScreenController {
 
 
 
-
     @FXML
     protected  void btnSaveClicked() throws IOException {
         UIAnimationControl.startButtonIllusionAnimation(btnSave, 40, 40);
@@ -50,7 +45,8 @@ public class GameScreenController {
     protected void btnHomeClicked() throws  IOException {
         UIAnimationControl.startButtonIllusionAnimation(btnHome, 40, 40);
         AnchorPane mainHomeScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("home.fxml")));
-        gameScreen.getChildren().setAll(mainHomeScreen);
+        gameScreen.getChildren().removeAll(gameScreen);
+        gameScreen.getChildren().addAll(mainHomeScreen);
     }
 
 
@@ -59,6 +55,7 @@ public class GameScreenController {
         UIAnimationControl.startButtonIllusionAnimation(btnPause, 40, 40);
 
     }
+
 
     @FXML
     public void onMouseEvent(MouseEvent event) {
@@ -71,11 +68,6 @@ public class GameScreenController {
         w.mountImage();
         gameScreen.getChildren().add(w.getPane());
         HomeController.hero.useWeapon(w);
-    }
-
-    @FXML
-    protected void move(MouseEvent event) {
-
     }
 
 }

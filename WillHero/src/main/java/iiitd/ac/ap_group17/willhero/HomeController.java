@@ -51,13 +51,19 @@ public class HomeController {
     @FXML
     static AnchorPane gameScreen;
 
+    //
+    //private Hero hero = new Hero("/assets/helmet/player.png");
+
     static ArrayList<Island> islands = new ArrayList<>();
     static ArrayList<CoinSet> coins = new ArrayList<>();
     static MenuAnimationController menuAnimationController = new MenuAnimationController();
-    static Hero hero = new Hero("/assets/helmet/player.png");
+
+    @FXML
+    static Hero hero;
+
    // static AnchorPane gameScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("gameScreen.fxml")));
     private void initGame() throws IOException{
-
+        hero = new Hero("/assets/helmet/player.png");
         gameScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("gameScreen.fxml")));
         Island islandStart = new Island();
         Island island = new Island();
