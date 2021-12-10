@@ -56,7 +56,7 @@ public class HomeController {
     static MenuAnimationController menuAnimationController = new MenuAnimationController();
     static Hero hero = new Hero("/assets/helmet/player.png");
    // static AnchorPane gameScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("gameScreen.fxml")));
-    private void initGame(MouseEvent event) throws IOException{
+    private void initGame() throws IOException{
 
         gameScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("gameScreen.fxml")));
         Island islandStart = new Island();
@@ -113,7 +113,6 @@ public class HomeController {
         boss.jump();
         greenOrc.jump();
 
-
         greenOrc.mountImage();
         hero.mountImage();
         redorc.mountImage();
@@ -123,9 +122,7 @@ public class HomeController {
         treasureWeapon.mountImage();
         island.mountImage();
         tnt.mountImage();
-
         loadCoins();
-        System.out.println(event.getEventType());
         gameScreen.getChildren().add(floatingIsland.getPane());
         gameScreen.getChildren().add(hero.getPane());
         gameScreen.getChildren().add(redorc.getPane());
@@ -136,14 +133,13 @@ public class HomeController {
         gameScreen.getChildren().add(island1.getPane());
         gameScreen.getChildren().add(tnt.getPane());
         gameScreen.getChildren().add(greenOrc.getPane());
-
     }
 
     @FXML
-    protected void btnStartNewGameClicked(MouseEvent event) {
+    protected void btnStartNewGameClicked() {
         UIAnimationControl.startButtonIllusionAnimation(btnNewGame, 115, 255);
         try {
-            initGame(event);
+            initGame();
             homeRoot.getChildren().setAll(gameScreen);
         } catch (IOException e){
             System.out.println("cant start the game");

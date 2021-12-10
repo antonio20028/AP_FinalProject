@@ -58,7 +58,6 @@ public class GameScreenController {
     protected void btnPauseClicked() throws IOException {
         UIAnimationControl.startButtonIllusionAnimation(btnPause, 40, 40);
 
-
     }
 
     @FXML
