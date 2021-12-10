@@ -6,7 +6,7 @@ public class TreasureWeapon extends Treasure<Weapon>{
     private ArrayList<Weapon> weapons;
 
     public TreasureWeapon() {
-        super("/assets/chest/1.png");
+        super("/assets/treasure/ChestOpen.png", "/assets/treasure/ChestClosed.png");
         getCollectables().addAll(weapons);
     }
 }
