@@ -44,9 +44,8 @@ public class GameScreenController {
     @FXML
     protected void btnHomeClicked() throws  IOException {
         UIAnimationControl.startButtonIllusionAnimation(btnHome, 40, 40);
-        AnchorPane mainHomeScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("home.fxml")));
-        gameScreen.getChildren().removeAll(gameScreen);
-        gameScreen.getChildren().addAll(mainHomeScreen);
+        PageController.setCurrentPage(gameScreen);
+        PageController.goToPage(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("home.fxml"))));
     }
 
 

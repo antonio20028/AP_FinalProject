@@ -4,6 +4,7 @@ import iiitd.ac.ap_group17.willhero.models.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -13,6 +14,8 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -146,7 +149,30 @@ public class HomeController {
         UIAnimationControl.startButtonIllusionAnimation(btnNewGame, 115, 255);
         try {
             initGame();
-            homeRoot.getChildren().setAll(gameScreen);
+            Stage nextStage = (Stage) btnExit.getScene().getWindow();
+            nextStage.setScene(new Scene(gameScreen));
+            nextStage.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(KeyEvent event) {
+                    if (event.getCode() == KeyCode.SPACE) {
+                        try {
+                            Weapon w = new Rocket();
+                            w.setHeight(50);
+                            w.setWidth(50);
+                            w.getCoordinates().setY(hero.getCoordinates().getY());
+                            w.getCoordinates().setX(hero.getCoordinates().getX());
+                            w.getPane().setVisible(false);
+                            w.mountImage();
+                            gameScreen.getChildren().add(w.getPane());
+                            HomeController.hero.useWeapon(w);
+                        } catch (NullPointerException e) {
+                            System.out.println("Start Game");
+                        }
+                    }
+                }
+            });
+            nextStage.setTitle("Win Hero");
+            nextStage.show();
         } catch (IOException e){
             System.out.println("cant start the game");
         }
@@ -155,8 +181,8 @@ public class HomeController {
     @FXML
     protected void btnSavedGameClicked() throws IOException {
             UIAnimationControl.startButtonIllusionAnimation(btnSavedGame, 130, 190);
-            AnchorPane savedGameScreen = FXMLLoader.load(getClass().getResource("savedgame.fxml"));
-            homeRoot.getChildren().setAll(savedGameScreen);
+            PageController.setCurrentPage(homeRoot);
+            PageController.goToPage(FXMLLoader.load(getClass().getResource("savedgame.fxml")));
     }
 
 
@@ -207,4 +233,6 @@ public class HomeController {
         }
 
     }
+
+
 }

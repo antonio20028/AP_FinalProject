@@ -23,9 +23,8 @@ public class SavedGameScreenController {
 
     @FXML
     protected void btnExitClicked()  throws  Exception {
-        AnchorPane homeScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("home.fxml")));
-        UIAnimationControl.startButtonIllusionAnimation(btnExit, 60, 50);
-        savedGameScreen.getChildren().setAll(homeScreen);
+        PageController.setCurrentPage(savedGameScreen);
+        PageController.goToPage(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("home.fxml"))));
     }
 
     @FXML

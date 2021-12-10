@@ -22,27 +22,6 @@ public class HomeApplication extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(HomeApplication.class.getResource("home.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1000, 600);
-
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.SPACE) {
-                  try {
-                      Weapon w = new Rocket();
-                      w.setHeight(50);
-                      w.setWidth(50);
-                      w.getCoordinates().setY(HomeController.hero.getCoordinates().getY());
-                      w.getCoordinates().setX(HomeController.hero.getCoordinates().getX());
-                      w.getPane().setVisible(false);
-                      w.mountImage();
-                      HomeController.gameScreen.getChildren().add(w.getPane());
-                      HomeController.hero.useWeapon(w);
-                  } catch (NullPointerException e) {
-                      System.out.println("Start Game");
-                  }
-                }
-            }
-        });
         stage.setTitle("Win Hero");
         stage.setFullScreen(false);
         stage.setResizable(false);
