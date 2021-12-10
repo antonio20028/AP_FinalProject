@@ -56,18 +56,4 @@ public class GameScreenController {
 
     }
 
-
-    @FXML
-    public void onMouseEvent(MouseEvent event) {
-        Weapon w = new Rocket();
-        w.setHeight(50);
-        w.setWidth(50);
-        w.getCoordinates().setY(HomeController.hero.getCoordinates().getY());
-        w.getCoordinates().setX(HomeController.hero.getCoordinates().getX());
-        w.getPane().setVisible(false);
-        w.mountImage();
-        gameScreen.getChildren().add(w.getPane());
-        HomeController.hero.useWeapon(w);
-    }
-
 }
