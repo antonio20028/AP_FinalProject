@@ -60,7 +60,7 @@ public class HomeController {
         Island island = new Island();
         RedOrc redorc = new RedOrc();
         FloatingIsland floatingIsland = new FloatingIsland();
-        Hero hero = new Hero("/assets/player.png");
+        Hero hero = new Hero("/assets/helmet/player.png");
 
         hero.getCoordinates().setY(327);
         hero.getCoordinates().setX(100);
@@ -72,7 +72,6 @@ public class HomeController {
 
         islandStart.getCoordinates().setX(100);
         islandStart.getCoordinates().setY(390);
-
 
         island.getCoordinates().setX(floatingIsland.getCoordinates().getX());
         island.getCoordinates().setY(440);

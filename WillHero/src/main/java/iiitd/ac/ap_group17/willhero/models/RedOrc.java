@@ -8,7 +8,7 @@ import javafx.util.Duration;
 public class RedOrc extends Orc implements Jumpable{
 
     public RedOrc() {
-        super("RED","/assets/orcs/orc_red.png");
+        super("RED","/assets/orcs/RedOrc1.png");
         this.setWidth(70);
         this.setHeight(72);
     }
