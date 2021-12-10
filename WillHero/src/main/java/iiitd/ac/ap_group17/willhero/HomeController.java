@@ -59,6 +59,7 @@ public class HomeController {
         Island islandStart = new Island();
         Island island = new Island();
         RedOrc redorc = new RedOrc();
+        Boss boss = new Boss();
         FloatingIsland floatingIsland = new FloatingIsland();
         Hero hero = new Hero("/assets/helmet/player.png");
 
@@ -70,6 +71,9 @@ public class HomeController {
         redorc.getCoordinates().setX(floatingIsland.getCoordinates().getX()+50);
         redorc.getCoordinates().setY(378);
 
+        boss.getCoordinates().setX(floatingIsland.getCoordinates().getX());
+        boss.getCoordinates().setY(100);
+
         islandStart.getCoordinates().setX(100);
         islandStart.getCoordinates().setY(390);
 
@@ -79,14 +83,16 @@ public class HomeController {
         islandStart.setHeight(100);
         islandStart.setWidth(200);
 
-        island.setHeight(100);
+        island.setHeight(90);
         island.setWidth(200);
 
         hero.jump();
         redorc.jump();
+        boss.jump();
        //loadIslands();
         hero.mountImage();
         redorc.mountImage();
+        boss.mountImage();
         islandStart.mountImage();
         island.mountImage();
         loadCoins();
@@ -97,6 +103,7 @@ public class HomeController {
         gameScreen.getChildren().add(redorc.getPane());
         gameScreen.getChildren().add(islandStart.getPane());
         gameScreen.getChildren().add(island.getPane());
+        gameScreen.getChildren().add(boss.getPane());
 
 
     }
