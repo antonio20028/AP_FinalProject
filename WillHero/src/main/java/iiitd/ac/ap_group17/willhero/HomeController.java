@@ -182,7 +182,7 @@ public class HomeController {
     protected void btnSavedGameClicked() throws IOException {
             UIAnimationControl.startButtonIllusionAnimation(btnSavedGame, 130, 190);
             PageController.setCurrentPage(homeRoot);
-            PageController.goToPage(FXMLLoader.load(getClass().getResource("savedgame.fxml")));
+            PageController.goToPage(FXMLLoader.load(getClass().getResource("savedgame.fxml")), "Win Hero - Saved Games");
     }
 
 
@@ -228,7 +228,6 @@ public class HomeController {
             CoinSet coinSet = new CoinSet();
             coinSet.setLayoutX(new Random().nextDouble(400, 500));
             coinSet.setLayoutY(new Random().nextDouble(270, 300));
-
             gameScreen.getChildren().add(coinSet);
         }
 

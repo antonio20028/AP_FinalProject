@@ -45,7 +45,7 @@ public class GameScreenController {
     protected void btnHomeClicked() throws  IOException {
         UIAnimationControl.startButtonIllusionAnimation(btnHome, 40, 40);
         PageController.setCurrentPage(gameScreen);
-        PageController.goToPage(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("home.fxml"))));
+        PageController.goToPage(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("home.fxml"))), "Win Hero");
     }
 
 
