@@ -9,8 +9,8 @@ public class RedOrc extends Orc implements Jumpable{
 
     public RedOrc() {
         super("RED","/assets/orcs/RedOrc1.png");
-        this.setWidth(70);
-        this.setHeight(72);
+        this.setWidth(60);
+        this.setHeight(58);
     }
 
     @Override
