@@ -6,7 +6,7 @@ public class TreasureCoin extends Treasure<Coin> {
     private ArrayList<Coin> coins = new ArrayList<>();
 
     public TreasureCoin() {
-        super("/assets/chest/1.png");
+        super("/assets/treasure/1.png", "/assets/treasure/6.png");
         getCollectables().addAll(coins);
     }
 
