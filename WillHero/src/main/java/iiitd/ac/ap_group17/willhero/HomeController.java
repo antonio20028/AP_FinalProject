@@ -149,9 +149,8 @@ public class HomeController {
         UIAnimationControl.startButtonIllusionAnimation(btnNewGame, 115, 255);
         try {
             initGame();
-            Stage nextStage = (Stage) btnExit.getScene().getWindow();
-            nextStage.setScene(new Scene(gameScreen));
-            nextStage.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
+            PageController.goToPage(homeRoot, gameScreen, "Win Hero");
+            PageController.nextPage.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent event) {
                     if (event.getCode() == KeyCode.SPACE) {
@@ -171,8 +170,6 @@ public class HomeController {
                     }
                 }
             });
-            nextStage.setTitle("Win Hero");
-            nextStage.show();
         } catch (IOException e){
             System.out.println("cant start the game");
         }
@@ -181,8 +178,7 @@ public class HomeController {
     @FXML
     protected void btnSavedGameClicked() throws IOException {
             UIAnimationControl.startButtonIllusionAnimation(btnSavedGame, 130, 190);
-            PageController.setCurrentPage(homeRoot);
-            PageController.goToPage(FXMLLoader.load(getClass().getResource("savedgame.fxml")), "Win Hero - Saved Games");
+            PageController.goToPage(homeRoot, FXMLLoader.load(getClass().getResource("savedgame.fxml")), "Win Hero - Saved Games");
     }
 
 

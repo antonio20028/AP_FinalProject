@@ -34,7 +34,6 @@ public class GameScreenController {
     private AnchorPane gameScreen;
 
 
-
     @FXML
     protected  void btnSaveClicked() throws IOException {
         UIAnimationControl.startButtonIllusionAnimation(btnSave, 40, 40);
@@ -44,8 +43,7 @@ public class GameScreenController {
     @FXML
     protected void btnHomeClicked() throws  IOException {
         UIAnimationControl.startButtonIllusionAnimation(btnHome, 40, 40);
-        PageController.setCurrentPage(gameScreen);
-        PageController.goToPage(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("home.fxml"))), "Win Hero");
+        PageController.goBack();
     }
 
 

@@ -23,8 +23,7 @@ public class SavedGameScreenController {
 
     @FXML
     protected void btnExitClicked()  throws  Exception {
-        PageController.setCurrentPage(savedGameScreen);
-        PageController.goToPage(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("home.fxml"))), "Win Hero");
+        PageController.goBack();
     }
 
     @FXML
