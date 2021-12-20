@@ -1,6 +1,7 @@
 package iiitd.ac.ap_group17.willhero.models;
 
 
+import iiitd.ac.ap_group17.willhero.AnimationController;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -27,6 +28,7 @@ public class Boss extends Orc implements Jumpable{
         time.getKeyFrames().add(new KeyFrame(Duration.seconds(0.4),
                 new KeyValue(this.getPane().translateYProperty(),
                         -(this.getHeight()+20))));
+        AnimationController.timelines.add(time);
         time.play();
     }
 

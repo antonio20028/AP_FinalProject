@@ -1,5 +1,6 @@
 package iiitd.ac.ap_group17.willhero.models;
 
+import iiitd.ac.ap_group17.willhero.AnimationController;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -20,6 +21,7 @@ public class GreenOrc extends Orc implements Jumpable{
         time.getKeyFrames().add(new KeyFrame(Duration.seconds(0.6),
                 new KeyValue(this.getPane().translateYProperty(),
                         -(this.getHeight()+35))));
+        AnimationController.timelines.add(time);
         time.play();
     }
 }

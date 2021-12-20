@@ -1,5 +1,6 @@
 package iiitd.ac.ap_group17.willhero.models;
 
+import iiitd.ac.ap_group17.willhero.AnimationController;
 import iiitd.ac.ap_group17.willhero.HomeController;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -25,6 +26,7 @@ public class Hero extends Character implements Jumpable{
         timeline.setAutoReverse(true);
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5), new KeyValue(this.getPane().translateYProperty(), -(this.getHeight() + 15))));
+        AnimationController.timelines.add(timeline);
         timeline.play();
     }
 
@@ -45,7 +47,13 @@ public class Hero extends Character implements Jumpable{
             timeline.setCycleCount(1);
             timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5), new KeyValue(rocket.getPane().translateXProperty(), 500)));
             timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5), new KeyValue(rocket.getPane().visibleProperty(), false)));
+            AnimationController.timelines.add(timeline);
             timeline.play();
         }
+    }
+
+    @Override
+    public void onCollision(RigidiBody other) {
+
     }
 }

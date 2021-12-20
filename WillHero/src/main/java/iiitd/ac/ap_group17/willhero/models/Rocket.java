@@ -4,7 +4,6 @@ public class Rocket extends Weapon {
 
     public Rocket () {
         super("/assets/weapons/WeaponShuriken.png");
-
     }
 
 }

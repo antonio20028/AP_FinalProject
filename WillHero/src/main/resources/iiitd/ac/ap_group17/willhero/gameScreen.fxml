@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="gameScreen" maxHeight="-Infinity"  maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iiitd.ac.ap_group17.willhero.GameScreenController">
+<AnchorPane fx:id="gameScreen" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iiitd.ac.ap_group17.willhero.GameScreenController">
     <Pane fx:id="backgroundImage" layoutX="-6.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="inGame">
         <stylesheets>
             <URL value="@style.css" />
@@ -43,6 +43,11 @@
                <Image url="@../../../../assets/controls/b_10.png" />
             </image>
          </ImageView>
+         <Label fx:id="lblPause"  layoutX="378.0" layoutY="107.0" prefHeight="111.0" prefWidth="371.0" text="Paused" textAlignment="CENTER" textFill="WHITE" visible="false">
+            <font>
+               <Font name="System Bold" size="76.0" />
+            </font>
+         </Label>
       </children>
     </Pane>
 </AnchorPane>
