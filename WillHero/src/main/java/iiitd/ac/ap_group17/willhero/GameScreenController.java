@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -59,14 +60,16 @@ public class GameScreenController {
 
         if (AnimationController.timelines.get(0).getStatus() == Animation.Status.RUNNING) {
             lblPause.setVisible(true);
+            btnPause.setImage(new Image(this.getClass().getResource("/assets/controls/play.png").toString()));
             Timeline t = new Timeline();
             t.setAutoReverse(true);
             t.setCycleCount(Timeline.INDEFINITE);
-            t.getKeyFrames().add(new KeyFrame(Duration.seconds(0.6), new KeyValue(lblPause.opacityProperty(), 0.3, Interpolator.EASE_IN)));
+            t.getKeyFrames().add(new KeyFrame(Duration.seconds(0.3), new KeyValue(lblPause.opacityProperty(), 0.3, Interpolator.EASE_IN)));
             t.play();
             AnimationController.pauseAll();
         } else if (AnimationController.timelines.get(0).getStatus() == Animation.Status.PAUSED){
             lblPause.setVisible(false);
+            btnPause.setImage(new Image(this.getClass().getResource("/assets/controls/b_9.png").toString()));
             AnimationController.resumeAll();
         }
     }
