@@ -60,6 +60,10 @@ public class HomeController {
     static ArrayList<Island> islands = new ArrayList<>();
     static ArrayList<CoinSet> coins = new ArrayList<>();
     static MenuAnimationController menuAnimationController = new MenuAnimationController();
+    static ArrayList<Orc> orcs = new ArrayList<>();
+    static ArrayList<Timeline> animationTimelines = new ArrayList<>();
+
+
 
     @FXML
     static Hero hero;
@@ -73,6 +77,7 @@ public class HomeController {
         Island island1 = new Island();
         RedOrc redorc = new RedOrc();
         GreenOrc greenOrc = new GreenOrc();
+
 
         TreasureWeapon treasureWeapon = new TreasureWeapon();
 
@@ -132,6 +137,8 @@ public class HomeController {
         island.mountImage();
         tnt.mountImage();
         loadCoins();
+
+
         gameScreen.getChildren().add(floatingIsland.getPane());
         gameScreen.getChildren().add(hero.getPane());
         gameScreen.getChildren().add(redorc.getPane());
@@ -150,6 +157,8 @@ public class HomeController {
         try {
             initGame();
             PageController.goToPage(homeRoot, gameScreen, "Win Hero");
+
+
             PageController.nextPage.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent event) {

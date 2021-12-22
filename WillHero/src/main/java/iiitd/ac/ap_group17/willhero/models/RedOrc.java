@@ -1,5 +1,6 @@
 package iiitd.ac.ap_group17.willhero.models;
 
+import iiitd.ac.ap_group17.willhero.AnimationController;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -11,6 +12,13 @@ public class RedOrc extends Orc implements Jumpable{
         super("RED","/assets/orcs/RedOrc1.png");
         this.setWidth(60);
         this.setHeight(58);
+
+    }
+
+
+    @Override
+    public void mountImage() {
+        super.mountImage();
     }
 
     @Override
@@ -27,6 +35,7 @@ public class RedOrc extends Orc implements Jumpable{
         time.getKeyFrames().add(new KeyFrame(Duration.seconds(0.7),
                 new KeyValue(this.getPane().translateYProperty(),
                         -(this.getHeight()+35))));
+        AnimationController.timelines.add(time);
         time.play();
     }
 

@@ -1,5 +1,6 @@
 package iiitd.ac.ap_group17.willhero.models;
 
+import iiitd.ac.ap_group17.willhero.AnimationController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
@@ -40,6 +41,7 @@ public class Treasure <T extends Collectable> extends RigidiBody {
             this.getPane().getChildren().add(img_2);
         })));
 
+        AnimationController.timelines.add(timeline);
         timeline.play();
     }
 }
