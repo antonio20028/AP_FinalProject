@@ -13,7 +13,6 @@ public class FloatingIsland extends Island {
         this.setWidth(200);
         this.getCoordinates().setX(550);
         this.getCoordinates().setY(175);
-        this.mountImage();
         move();
     }
 

@@ -43,7 +43,7 @@
                <Image url="@../../../../assets/controls/b_10.png" />
             </image>
          </ImageView>
-         <Label fx:id="lblPause"  layoutX="378.0" layoutY="107.0" prefHeight="111.0" prefWidth="371.0" text="Paused" textAlignment="CENTER" textFill="WHITE" visible="false">
+         <Label fx:id="lblPause" layoutX="378.0" layoutY="107.0" prefHeight="111.0" prefWidth="371.0" text="Paused" textAlignment="CENTER" textFill="WHITE" visible="false">
             <font>
                <Font name="System Bold" size="76.0" />
             </font>

@@ -19,12 +19,14 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
 import java.security.Key;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.Random;
 
@@ -54,36 +56,23 @@ public class HomeController {
     @FXML
     static AnchorPane gameScreen;
 
-    //
-    //private Hero hero = new Hero("/assets/helmet/player.png");
+
 
     static ArrayList<Island> islands = new ArrayList<>();
     static ArrayList<CoinSet> coins = new ArrayList<>();
+    static boolean flag = true;
     static MenuAnimationController menuAnimationController = new MenuAnimationController();
-    static ArrayList<Orc> orcs = new ArrayList<>();
-    static ArrayList<Timeline> animationTimelines = new ArrayList<>();
-
-
 
     @FXML
     static Hero hero;
 
-   // static AnchorPane gameScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("gameScreen.fxml")));
+
     private void initGame() throws IOException{
         hero = new Hero("/assets/helmet/player.png");
         gameScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("gameScreen.fxml")));
         Island islandStart = new Island();
         Island island = new Island();
-        Island island1 = new Island();
-        RedOrc redorc = new RedOrc();
-        GreenOrc greenOrc = new GreenOrc();
 
-
-        TreasureWeapon treasureWeapon = new TreasureWeapon();
-
-        TNT tnt = new TNT();
-
-        Boss boss = new Boss();
         FloatingIsland floatingIsland = new FloatingIsland();
 
         hero.getCoordinates().setY(327);
@@ -91,27 +80,12 @@ public class HomeController {
         hero.setHeight(68);
         hero.setWidth(75);
 
-        redorc.getCoordinates().setX(floatingIsland.getCoordinates().getX()-60);
-        redorc.getCoordinates().setY(378);
-        greenOrc.getCoordinates().setX(floatingIsland.getCoordinates().getX() + 40);
-        greenOrc.getCoordinates().setY(378);
-
-        treasureWeapon.getCoordinates().setX(750);
-        treasureWeapon.getCoordinates().setY(328);
-        tnt.getCoordinates().setX(900);
-        tnt.getCoordinates().setY(350);
-
-        boss.getCoordinates().setX(floatingIsland.getCoordinates().getX());
-        boss.getCoordinates().setY(100);
-
         islandStart.getCoordinates().setX(100);
         islandStart.getCoordinates().setY(390);
 
-        island.getCoordinates().setX(floatingIsland.getCoordinates().getX() - 100);
+        island.getCoordinates().setX(floatingIsland.getCoordinates().getX() - 200);
         island.getCoordinates().setY(440);
 
-        island1.getCoordinates().setY(400);
-        island1.getCoordinates().setX(floatingIsland.getCoordinates().getX() + 200);
 
         islandStart.setHeight(100);
         islandStart.setWidth(200);
@@ -119,36 +93,21 @@ public class HomeController {
         island.setHeight(90);
         island.setWidth(200);
 
-        island1.setHeight(100);
-        island1.setWidth(250);
-
         hero.jump();
-        redorc.jump();
-        boss.jump();
-        greenOrc.jump();
 
-        greenOrc.mountImage();
         hero.mountImage();
-        redorc.mountImage();
-        boss.mountImage();
-        islandStart.mountImage();
-        island1.mountImage();
-        treasureWeapon.mountImage();
-        island.mountImage();
-        tnt.mountImage();
-        loadCoins();
 
 
-        gameScreen.getChildren().add(floatingIsland.getPane());
+        if (flag) {
+            islands.add(island);
+            islands.add(islandStart);
+            islands.add(floatingIsland);
+            islands.forEach(is ->  is.mountImage());
+        }
+
         gameScreen.getChildren().add(hero.getPane());
-        gameScreen.getChildren().add(redorc.getPane());
-        gameScreen.getChildren().add(islandStart.getPane());
-        gameScreen.getChildren().add(island.getPane());
-        gameScreen.getChildren().add(boss.getPane());
-        gameScreen.getChildren().add(treasureWeapon.getPane());
-        gameScreen.getChildren().add(island1.getPane());
-        gameScreen.getChildren().add(tnt.getPane());
-        gameScreen.getChildren().add(greenOrc.getPane());
+        islands.forEach(is -> gameScreen.getChildren().add(is.getPane()));
+
     }
 
     @FXML
@@ -156,23 +115,19 @@ public class HomeController {
         UIAnimationControl.startButtonIllusionAnimation(btnNewGame, 115, 255);
         try {
             initGame();
+            flag = false;
             PageController.goToPage(homeRoot, gameScreen, "Win Hero");
-
-
             PageController.nextPage.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent event) {
                     if (event.getCode() == KeyCode.SPACE) {
                         try {
-                            Weapon w = new Rocket();
-                            w.setHeight(50);
-                            w.setWidth(50);
-                            w.getCoordinates().setY(hero.getCoordinates().getY());
-                            w.getCoordinates().setX(hero.getCoordinates().getX());
-                            w.getPane().setVisible(false);
-                            w.mountImage();
-                            gameScreen.getChildren().add(w.getPane());
-                            HomeController.hero.useWeapon(w);
+                            moveIslands();
+                            if (checkCollisions()) {
+                                System.out.println("Collided");
+                            } else {
+                                hero.fall();
+                            }
                         } catch (NullPointerException e) {
                             System.out.println("Start Game");
                         }
@@ -184,10 +139,11 @@ public class HomeController {
         }
     }
 
+
     @FXML
     protected void btnSavedGameClicked() throws IOException {
-            UIAnimationControl.startButtonIllusionAnimation(btnSavedGame, 130, 190);
-            PageController.goToPage(homeRoot, FXMLLoader.load(getClass().getResource("savedgame.fxml")), "Win Hero - Saved Games");
+        UIAnimationControl.startButtonIllusionAnimation(btnSavedGame, 130, 190);
+        PageController.goToPage(homeRoot, FXMLLoader.load(getClass().getResource("savedgame.fxml")), "Win Hero - Saved Games");
     }
 
 
@@ -211,21 +167,81 @@ public class HomeController {
         menuAnimationController.reverse();
     }
 
-    private void loadIslands() {
-        for (int i = 0; i < 3; i++) {
-            islands.add(new Island());
+
+    private void moveIslands() {
+        Timeline moveTimeline = new Timeline();
+        for (Island island: islands) {
+            double lay_x = island.getPane().getLayoutX();
+            moveTimeline.setCycleCount(1);
+            moveTimeline.setAutoReverse(false);
+            moveTimeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.2), actionEvent -> {
+                island.getPane().setLayoutX(lay_x - 200);
+            }));
+            moveTimeline.play();
         }
-        for (Island i:islands) {
-            i.getCoordinates().setX(new Random().nextDouble(200, 1000));
-            i.getCoordinates().setY(new Random().nextDouble(390, 800));
-            i.setHeight(new Random().nextDouble(75, 120));
-            i.setWidth(new Random().nextDouble(200, 215));
-            i.mountImage();
-        }
-        for (int i = 0; i < islands.size(); i++) {
-            gameScreen.getChildren().add(islands.get(i).getPane());
-        }
+        AnimationController.timelines.add(moveTimeline);
+
     }
+
+
+    private boolean checkCollisions() {
+        boolean collided = false;
+
+        for (Island is : islands) {
+            if (Math.abs(hero.getPane().getLayoutX()) == Math.abs(is.getPane().getLayoutX())) {
+                hero.getPane().setLayoutY(Math.abs(Math.abs(is.getCoordinates().getY())
+                        - Math.abs(hero.getCoordinates().getY())) - 100);
+                collided = true;
+            }
+        }
+        return collided;
+    }
+
+
+    private void loadIsland() {
+        Island is = new Island();
+        is.getCoordinates().setY(390);
+        is.getCoordinates().setX(1000);
+        is.setWidth(200);
+        is.setHeight(100);
+        is.mountImage();
+        islands.add(is);
+        gameScreen.getChildren().add(islands.get(islands.size() - 1).getPane()); //after added, make it visible in gameScreen
+    }
+
+    private void loadFloatingIsland() {
+        Island is = new Island();
+        is.getCoordinates().setY(390);
+        is.getCoordinates().setX(1000);
+        is.setWidth(200);
+        is.setHeight(100);
+        is.mountImage();
+        islands.add(is);
+        gameScreen.getChildren().add(islands.get(islands.size() - 1).getPane()); //after added, make it visible in gameScreen
+    }
+
+
+    private void loadRedOrc() {
+
+    }
+
+    private void loadGreenOrc() {
+
+    }
+
+    private void loadBoss() {
+
+    }
+
+
+    private void loadTNT() {
+
+    }
+
+    private void loadTreasureChest() {
+
+    }
+
 
     private void loadCoins() {
 
@@ -237,6 +253,4 @@ public class HomeController {
         }
 
     }
-
-
 }

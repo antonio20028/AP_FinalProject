@@ -1,28 +1,11 @@
 package iiitd.ac.ap_group17.willhero.models;
 
-public class Vector2D {
-    private double x;
-    private double y;
+import javafx.scene.shape.Rectangle;
 
-    public double getX() {
-        return x;
-    }
+public class Vector2D  extends Rectangle {
 
     public Vector2D(double x, double y) {
-        this.x = x;
-        this.y = y;
+        this.setX(x);
+        this.setY(y);
     }
-
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public void setY(double y) {
-        this.y = y;
-    }
-
 }

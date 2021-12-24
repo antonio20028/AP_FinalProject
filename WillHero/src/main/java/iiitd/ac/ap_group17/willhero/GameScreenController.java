@@ -1,8 +1,10 @@
 package iiitd.ac.ap_group17.willhero;
 
+import iiitd.ac.ap_group17.willhero.models.Island;
 import iiitd.ac.ap_group17.willhero.models.Rocket;
 import iiitd.ac.ap_group17.willhero.models.Weapon;
 import javafx.animation.*;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
@@ -10,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -20,7 +23,6 @@ import java.util.Objects;
 import java.util.function.UnaryOperator;
 
 public class GameScreenController {
-
 
     @FXML
     private ImageView btnSave;
@@ -42,6 +44,10 @@ public class GameScreenController {
 
 
     @FXML
+    static Label txtPlayerPosition;
+
+
+    @FXML
     protected  void btnSaveClicked() throws IOException {
         UIAnimationControl.startButtonIllusionAnimation(btnSave, 40, 40);
     }
@@ -53,11 +59,9 @@ public class GameScreenController {
         PageController.goBack();
     }
 
-
     @FXML
     protected void btnPauseClicked() throws IOException {
         UIAnimationControl.startButtonIllusionAnimation(btnPause, 40, 40);
-
         if (AnimationController.timelines.get(0).getStatus() == Animation.Status.RUNNING) {
             lblPause.setVisible(true);
             btnPause.setImage(new Image(this.getClass().getResource("/assets/controls/play.png").toString()));
@@ -73,7 +77,6 @@ public class GameScreenController {
             AnimationController.resumeAll();
         }
     }
-
 
 
 }
