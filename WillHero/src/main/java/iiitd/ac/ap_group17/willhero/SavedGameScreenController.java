@@ -40,7 +40,7 @@ public class SavedGameScreenController {
         ToggleButton selected = (ToggleButton) group.getSelectedToggle();
 
         TableData game = HomeApplication.getDatabase().getGameByName(selected.getText());
-        System.out.print(game.getDate());
+        System.out.print(game.getHero().getCoordinates().getLayoutX());
 
         GameScreenController.currentGame.read();
     }

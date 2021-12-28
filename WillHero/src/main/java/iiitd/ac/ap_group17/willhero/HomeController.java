@@ -93,7 +93,7 @@ public class HomeController {
             islands.add(island);
             islands.add(islandStart);
             islands.add(floatingIsland);
-            islands.forEach(is ->  is.mountImage());
+            islands.forEach(RigidiBody::mountImage);
         }
 
         gameScreen.getChildren().add(hero.getPane());
@@ -137,13 +137,20 @@ public class HomeController {
         AnchorPane savedGameScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("savedgame.fxml")));
 
         double gap = 50;
-        for (TableData t : HomeApplication.getDatabase().getSavedGames()) {
-            ToggleButton button = new ToggleButton(t.getName());
-            button.setLayoutX(440);
-            button.setLayoutY(130 + gap);
-            button.setToggleGroup(SavedGameScreenController.group);
-            gap = gap + 50;
-            savedGameScreen.getChildren().add(button);
+        if (HomeApplication.getDatabase().getSavedGames().size() != 0) {
+            for (TableData t : HomeApplication.getDatabase().getSavedGames()) {
+                ToggleButton button = new ToggleButton(t.getName());
+                button.setLayoutX(440);
+                button.setLayoutY(130 + gap);
+                button.setToggleGroup(SavedGameScreenController.group);
+                gap = gap + 50;
+                savedGameScreen.getChildren().add(button);
+            }
+        } else {
+            Label label = new Label("No Saved Games");
+            label.setLayoutX(440);
+            label.setLayoutY(180);
+            savedGameScreen.getChildren().add(label);
         }
 
         PageController.goToPage(homeRoot,savedGameScreen , "Win Hero - Saved Games");
@@ -187,7 +194,6 @@ public class HomeController {
         AnimationController.timelines.add(moveTimeline);
 
     }
-
 
     private boolean checkCollisions() {
         boolean collided = false;
@@ -247,7 +253,6 @@ public class HomeController {
     }
 
     private void loadCoins() {
-
         for(int i = 0; i < 1; i++) {
             CoinSet coinSet = new CoinSet();
             coinSet.setLayoutX(new Random().nextDouble(400, 500));
