@@ -1,5 +1,6 @@
 package iiitd.ac.ap_group17.willhero;
 
+import iiitd.ac.ap_group17.willhero.data.TableData;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -11,11 +12,14 @@ import javafx.util.Duration;
 import java.util.Objects;
 
 public class SavedGameScreenController {
+
     @FXML
     private ImageView btnExit;
 
+
     @FXML
     private ImageView btnLoadGame;
+
 
     @FXML
     private AnchorPane savedGameScreen;
@@ -29,5 +33,7 @@ public class SavedGameScreenController {
     @FXML
     protected void btnLoadClicked() throws Exception {
         UIAnimationControl.startButtonIllusionAnimation(btnLoadGame, 180, 200);
+        HomeApplication.getDatabase().getSavedGames().forEach(tableData -> System.out.println(tableData.getName()));
+        GameScreenController.currentGame.read();
     }
 }

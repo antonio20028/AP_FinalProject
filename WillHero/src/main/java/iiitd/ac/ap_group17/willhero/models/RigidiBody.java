@@ -4,24 +4,23 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-abstract class RigidiBody {
+import java.io.Serializable;
+
+public abstract class RigidiBody implements Serializable {
     private Vector2D coordinates = new Vector2D(0, 0);
     private double height;
     private double width;
     private double velocity;
     private String path;
-    private Pane pane;
-    private ImageView imageView;
+    private final transient Pane pane;
 
     public RigidiBody(String path) {
-        imageView = new ImageView();
         this.path = path;
         this.pane = new Pane();
     }
 
     public void mountImage() {
-        Image image = new Image(getClass().getResource(path).toString());
-        imageView.setImage(image);
+        ImageView imageView = new ImageView( new Image(getClass().getResource(path).toString()));
         imageView.setFitWidth(this.width);
         imageView.setFitHeight(this.height);
         imageView.setLayoutX(coordinates.getX());

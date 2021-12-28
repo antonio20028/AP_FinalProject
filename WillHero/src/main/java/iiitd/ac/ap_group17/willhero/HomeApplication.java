@@ -1,5 +1,7 @@
 package iiitd.ac.ap_group17.willhero;
 
+import iiitd.ac.ap_group17.willhero.data.Database;
+import iiitd.ac.ap_group17.willhero.data.TableData;
 import iiitd.ac.ap_group17.willhero.models.Rocket;
 import iiitd.ac.ap_group17.willhero.models.Weapon;
 import javafx.application.Application;
@@ -13,13 +15,43 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.io.*;
 
-public class HomeApplication extends Application {
+public class HomeApplication extends Application  implements Serializable {
+    private static Database database = new Database();
+
+    public static Database getDatabase() {
+        return database;
+    }
+
+    public static void serialize() throws IOException {
+        ObjectOutputStream out = null;
+        try {
+            out = new ObjectOutputStream(new FileOutputStream("database.txt"));
+            out.writeObject(getDatabase());
+        } finally {
+            if (out!=null) {
+                out.close();
+            }
+        }
+    }
+
+    public static void  deserialize() throws  IOException, ClassNotFoundException{
+        ObjectInputStream in = null;
+
+        try {
+            in = new ObjectInputStream(new FileInputStream("database.txt"));
+            database = (Database) in.readObject();
+        } finally {
+            if (in!= null) {
+                in.close();
+            }
+        }
+    }
+
 
     @Override
-    public void start(Stage stage) throws IOException {
-
+    public void start(Stage stage) throws IOException, ClassNotFoundException {
         FXMLLoader fxmlLoader = new FXMLLoader(HomeApplication.class.getResource("home.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1000, 600);
         stage.setTitle("Win Hero");
@@ -30,14 +62,21 @@ public class HomeApplication extends Application {
         stage.show();
     }
 
-
-
     public static void main(String[] args) {
         launch();
     }
 
+
     @Override
     public void init() throws Exception {
+        GameScreenController.currentGame = new TableData();
+        deserialize();
         super.init();
+    }
+
+
+    @Override
+    public void stop() throws Exception {
+        super.stop();
     }
 }

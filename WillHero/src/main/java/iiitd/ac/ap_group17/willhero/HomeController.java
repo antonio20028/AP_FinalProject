@@ -2,33 +2,20 @@ package iiitd.ac.ap_group17.willhero;
 
 import iiitd.ac.ap_group17.willhero.models.*;
 import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
-import java.security.Key;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Objects;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class HomeController {
 
@@ -56,8 +43,6 @@ public class HomeController {
     @FXML
     static AnchorPane gameScreen;
 
-
-
     static ArrayList<Island> islands = new ArrayList<>();
     static ArrayList<CoinSet> coins = new ArrayList<>();
     static boolean flag = true;
@@ -65,7 +50,6 @@ public class HomeController {
 
     @FXML
     static Hero hero;
-
 
     private void initGame() throws IOException{
         hero = new Hero("/assets/helmet/player.png");
@@ -83,20 +67,17 @@ public class HomeController {
         islandStart.getCoordinates().setX(100);
         islandStart.getCoordinates().setY(390);
 
-        island.getCoordinates().setX(floatingIsland.getCoordinates().getX() - 200);
+        island.getCoordinates().setX(floatingIsland.getCoordinates().getX() - 100);
         island.getCoordinates().setY(440);
-
 
         islandStart.setHeight(100);
         islandStart.setWidth(200);
 
         island.setHeight(90);
         island.setWidth(200);
-
         hero.jump();
 
         hero.mountImage();
-
 
         if (flag) {
             islands.add(island);
@@ -139,7 +120,6 @@ public class HomeController {
         }
     }
 
-
     @FXML
     protected void btnSavedGameClicked() throws IOException {
         UIAnimationControl.startButtonIllusionAnimation(btnSavedGame, 130, 190);
@@ -167,15 +147,17 @@ public class HomeController {
         menuAnimationController.reverse();
     }
 
-
     private void moveIslands() {
+        AtomicInteger i = new AtomicInteger(5);
         Timeline moveTimeline = new Timeline();
         for (Island island: islands) {
             double lay_x = island.getPane().getLayoutX();
             moveTimeline.setCycleCount(1);
             moveTimeline.setAutoReverse(false);
             moveTimeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.2), actionEvent -> {
-                island.getPane().setLayoutX(lay_x - 200);
+                island.getPane().setLayoutX(lay_x - 100);
+                hero.getCoordinates().setX(i.get());
+                i.set(i.get() + 5);
             }));
             moveTimeline.play();
         }
@@ -194,9 +176,9 @@ public class HomeController {
                 collided = true;
             }
         }
+
         return collided;
     }
-
 
     private void loadIsland() {
         Island is = new Island();
@@ -233,7 +215,6 @@ public class HomeController {
 
     }
 
-
     private void loadTNT() {
 
     }
@@ -241,7 +222,6 @@ public class HomeController {
     private void loadTreasureChest() {
 
     }
-
 
     private void loadCoins() {
 

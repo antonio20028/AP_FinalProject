@@ -2,9 +2,11 @@ package iiitd.ac.ap_group17.willhero.models;
 
 import javafx.scene.Group;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.SimpleTimeZone;
 
-public class CoinSet extends Group implements Cloneable {
+public class CoinSet extends Group implements Cloneable, Serializable {
 
    // private ArrayList<Coin> coins = new ArrayList<>();
 

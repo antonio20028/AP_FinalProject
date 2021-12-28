@@ -1,21 +1,23 @@
 package iiitd.ac.ap_group17.willhero.data;
 
-public class Database {
+import java.io.Serial;
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class Database implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 40L;
+
+    private final ArrayList<TableData> savedGames;
 
     public Database(){
-
+        savedGames = new ArrayList<>();
     }
 
-    public void read() {
-
+    public ArrayList<TableData> getSavedGames() {
+        return savedGames;
     }
 
-    public void write() {
-
-    }
-
-    public void update() {
-
-    }
 
 }

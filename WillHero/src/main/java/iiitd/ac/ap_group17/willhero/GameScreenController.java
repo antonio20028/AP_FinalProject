@@ -1,5 +1,6 @@
 package iiitd.ac.ap_group17.willhero;
 
+import iiitd.ac.ap_group17.willhero.data.TableData;
 import iiitd.ac.ap_group17.willhero.models.Island;
 import iiitd.ac.ap_group17.willhero.models.Rocket;
 import iiitd.ac.ap_group17.willhero.models.Weapon;
@@ -46,10 +47,15 @@ public class GameScreenController {
     @FXML
     static Label txtPlayerPosition;
 
+    public static TableData currentGame;
+
 
     @FXML
     protected  void btnSaveClicked() throws IOException {
         UIAnimationControl.startButtonIllusionAnimation(btnSave, 40, 40);
+        System.out.println(HomeApplication.getDatabase().getSavedGames().size());
+        currentGame.update(HomeController.hero, HomeController.islands, HomeController.coins);
+        currentGame.write();
     }
 
 
@@ -58,6 +64,7 @@ public class GameScreenController {
         UIAnimationControl.startButtonIllusionAnimation(btnHome, 40, 40);
         PageController.goBack();
     }
+
 
     @FXML
     protected void btnPauseClicked() throws IOException {
