@@ -5,25 +5,28 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class SavedGameScreenController {
 
     @FXML
     private ImageView btnExit;
 
-
     @FXML
     private ImageView btnLoadGame;
 
-
-    @FXML
-    private AnchorPane savedGameScreen;
-
+    public static ToggleGroup group = new ToggleGroup();
 
     @FXML
     protected void btnExitClicked()  throws  Exception {
@@ -33,7 +36,12 @@ public class SavedGameScreenController {
     @FXML
     protected void btnLoadClicked() throws Exception {
         UIAnimationControl.startButtonIllusionAnimation(btnLoadGame, 180, 200);
-        HomeApplication.getDatabase().getSavedGames().forEach(tableData -> System.out.println(tableData.getName()));
+
+        ToggleButton selected = (ToggleButton) group.getSelectedToggle();
+
+        TableData game = HomeApplication.getDatabase().getGameByName(selected.getText());
+        System.out.print(game.getDate());
+
         GameScreenController.currentGame.read();
     }
 }

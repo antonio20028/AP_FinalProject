@@ -1,18 +1,25 @@
 package iiitd.ac.ap_group17.willhero;
 
+import iiitd.ac.ap_group17.willhero.data.TableData;
 import iiitd.ac.ap_group17.willhero.models.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -43,6 +50,7 @@ public class HomeController {
     @FXML
     static AnchorPane gameScreen;
 
+
     static ArrayList<Island> islands = new ArrayList<>();
     static ArrayList<CoinSet> coins = new ArrayList<>();
     static boolean flag = true;
@@ -54,6 +62,8 @@ public class HomeController {
     private void initGame() throws IOException{
         hero = new Hero("/assets/helmet/player.png");
         gameScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("gameScreen.fxml")));
+
+
         Island islandStart = new Island();
         Island island = new Island();
 
@@ -122,8 +132,21 @@ public class HomeController {
 
     @FXML
     protected void btnSavedGameClicked() throws IOException {
+
         UIAnimationControl.startButtonIllusionAnimation(btnSavedGame, 130, 190);
-        PageController.goToPage(homeRoot, FXMLLoader.load(getClass().getResource("savedgame.fxml")), "Win Hero - Saved Games");
+        AnchorPane savedGameScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("savedgame.fxml")));
+
+        double gap = 50;
+        for (TableData t : HomeApplication.getDatabase().getSavedGames()) {
+            ToggleButton button = new ToggleButton(t.getName());
+            button.setLayoutX(440);
+            button.setLayoutY(130 + gap);
+            button.setToggleGroup(SavedGameScreenController.group);
+            gap = gap + 50;
+            savedGameScreen.getChildren().add(button);
+        }
+
+        PageController.goToPage(homeRoot,savedGameScreen , "Win Hero - Saved Games");
     }
 
 

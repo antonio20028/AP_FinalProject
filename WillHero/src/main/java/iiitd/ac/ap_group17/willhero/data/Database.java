@@ -20,4 +20,14 @@ public class Database implements Serializable {
     }
 
 
+    public TableData getGameByName(String name) {
+        for (TableData t: savedGames) {
+            if (t.getName().equals(name)) {
+                return t;
+            }
+        }
+
+        return null;
+    }
+
 }

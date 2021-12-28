@@ -10,15 +10,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.util.Objects;
 
 public class HomeApplication extends Application  implements Serializable {
     private static Database database = new Database();
+    static AnchorPane savedGameScreen;
 
     public static Database getDatabase() {
         return database;
@@ -36,13 +42,18 @@ public class HomeApplication extends Application  implements Serializable {
         }
     }
 
-    public static void  deserialize() throws  IOException, ClassNotFoundException{
+    public static void  deserialize() throws  IOException {
         ObjectInputStream in = null;
 
         try {
             in = new ObjectInputStream(new FileInputStream("database.txt"));
             database = (Database) in.readObject();
-        } finally {
+        } catch (IOException | ClassNotFoundException e) {
+            if (e instanceof ClassNotFoundException c) {
+                serialize();
+            }
+        }
+        finally {
             if (in!= null) {
                 in.close();
             }
@@ -69,8 +80,11 @@ public class HomeApplication extends Application  implements Serializable {
 
     @Override
     public void init() throws Exception {
+        savedGameScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("savedgame.fxml")));
         GameScreenController.currentGame = new TableData();
         deserialize();
+
+        savedGameScreen.getChildren().add(new Rectangle());
         super.init();
     }
 

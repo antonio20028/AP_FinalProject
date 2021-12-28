@@ -27,17 +27,18 @@ public class TableData implements Serializable {
     private String date;
 
     public TableData() {
+        tdID++;
         LocalDateTime dateTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E, MMM dd yyyy HH:mm:ss");
         date = dateTime.format(formatter);
-        name = "Game " + date;
+        name = "Game " + tdID + " " + date;
+
     }
 
     //this method is to load Game
     public void read() throws IOException, ClassNotFoundException {
         HomeApplication.deserialize();
     }
-
 
 
     //this method is to save game.
