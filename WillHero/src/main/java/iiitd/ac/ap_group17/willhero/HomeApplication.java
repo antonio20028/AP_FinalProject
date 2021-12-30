@@ -49,7 +49,7 @@ public class HomeApplication extends Application  implements Serializable {
             in = new ObjectInputStream(new FileInputStream("database.txt"));
             database = (Database) in.readObject();
         } catch (IOException | ClassNotFoundException e) {
-            if (e instanceof ClassNotFoundException c) {
+            if (e instanceof ClassNotFoundException) {
                 serialize();
             }
         }
@@ -83,8 +83,6 @@ public class HomeApplication extends Application  implements Serializable {
         savedGameScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("savedgame.fxml")));
         GameScreenController.currentGame = new TableData();
         deserialize();
-
-        savedGameScreen.getChildren().add(new Rectangle());
         super.init();
     }
 

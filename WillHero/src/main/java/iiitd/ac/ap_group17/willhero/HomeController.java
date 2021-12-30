@@ -9,17 +9,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
 import javafx.util.Duration;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -50,8 +48,7 @@ public class HomeController {
     @FXML
     static AnchorPane gameScreen;
 
-
-    static ArrayList<Island> islands = new ArrayList<>();
+    static final ArrayList<Island> islands = new ArrayList<>();
     static ArrayList<CoinSet> coins = new ArrayList<>();
     static boolean flag = true;
     static MenuAnimationController menuAnimationController = new MenuAnimationController();
@@ -63,9 +60,11 @@ public class HomeController {
         hero = new Hero("/assets/helmet/player.png");
         gameScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("gameScreen.fxml")));
 
-
         Island islandStart = new Island();
         Island island = new Island();
+        Island island1 = new Island();
+        Island island2 = new Island();
+        Island island3 = new Island();
 
         FloatingIsland floatingIsland = new FloatingIsland();
 
@@ -79,20 +78,42 @@ public class HomeController {
 
         island.getCoordinates().setX(floatingIsland.getCoordinates().getX() - 100);
         island.getCoordinates().setY(440);
+        island1.getCoordinates().setX(floatingIsland.getCoordinates().getX() + 250);
+        island1.getCoordinates().setY(500);
+
+        island2.getCoordinates().setX(island1.getCoordinates().getX() + 320);
+        island2.getCoordinates().setY(420);
+
+        island3.getCoordinates().setX(floatingIsland.getCoordinates().getX() + 950);
+        island3.getCoordinates().setY(390);
+
+        island1.setHeight(100);
+        island1.setWidth(200);
+
+
+        island2.setHeight(100);
+        island2.setWidth(200);
+
+        island3.setHeight(100);
+        island3.setWidth(200);
 
         islandStart.setHeight(100);
         islandStart.setWidth(200);
 
         island.setHeight(90);
         island.setWidth(200);
+
         hero.jump();
 
         hero.mountImage();
 
         if (flag) {
-            islands.add(island);
             islands.add(islandStart);
+            islands.add(island);
             islands.add(floatingIsland);
+            //islands.add(island1);
+            //islands.add(island2);
+            //islands.add(island3);
             islands.forEach(RigidiBody::mountImage);
         }
 
@@ -114,11 +135,7 @@ public class HomeController {
                     if (event.getCode() == KeyCode.SPACE) {
                         try {
                             moveIslands();
-                            if (checkCollisions()) {
-                                System.out.println("Collided");
-                            } else {
-                                hero.fall();
-                            }
+                            checkCollisions();
                         } catch (NullPointerException e) {
                             System.out.println("Start Game");
                         }
@@ -152,10 +169,8 @@ public class HomeController {
             label.setLayoutY(180);
             savedGameScreen.getChildren().add(label);
         }
-
         PageController.goToPage(homeRoot,savedGameScreen , "Win Hero - Saved Games");
     }
-
 
     @FXML
     protected void btnOptionClicked() throws IOException {
@@ -178,46 +193,29 @@ public class HomeController {
     }
 
     private void moveIslands() {
-        AtomicInteger i = new AtomicInteger(5);
         Timeline moveTimeline = new Timeline();
-        for (Island island: islands) {
-            double lay_x = island.getPane().getLayoutX();
-            moveTimeline.setCycleCount(1);
-            moveTimeline.setAutoReverse(false);
-            moveTimeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.2), actionEvent -> {
-                island.getPane().setLayoutX(lay_x - 100);
-                hero.getCoordinates().setX(i.get());
-                i.set(i.get() + 5);
-            }));
-            moveTimeline.play();
-        }
-        AnimationController.timelines.add(moveTimeline);
 
-    }
-
-    private boolean checkCollisions() {
-        boolean collided = false;
-
-        for (Island is : islands) {
-            if (Math.abs(hero.getPane().getLayoutX()) == Math.abs(is.getPane().getLayoutX())) {
-                hero.getPane().setLayoutY(Math.abs(Math.abs(is.getCoordinates().getY())
-                        - Math.abs(hero.getCoordinates().getY())) - 100);
-                collided = true;
+        synchronized (islands) {
+            for (Island island: islands) {
+                double lay_x = island.getImageView().getLayoutX();
+                moveTimeline.setCycleCount(1);
+                moveTimeline.setAutoReverse(false);
+                moveTimeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.2), actionEvent -> {
+                    island.getImageView().setLayoutX(lay_x - 100);
+                }));
+                moveTimeline.play();
             }
         }
 
-        return collided;
+        AnimationController.timelines.add(moveTimeline);
     }
 
-    private void loadIsland() {
-        Island is = new Island();
-        is.getCoordinates().setY(390);
-        is.getCoordinates().setX(1000);
-        is.setWidth(200);
-        is.setHeight(100);
-        is.mountImage();
-        islands.add(is);
-        gameScreen.getChildren().add(islands.get(islands.size() - 1).getPane()); //after added, make it visible in gameScreen
+    private void checkCollisions() {
+
+    }
+
+    private void loadIsland() throws InterruptedException {
+
     }
 
     private void loadFloatingIsland() {

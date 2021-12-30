@@ -5,6 +5,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public abstract class RigidiBody implements Serializable {
     private Vector2D coordinates = new Vector2D(0, 0);
@@ -13,20 +14,27 @@ public abstract class RigidiBody implements Serializable {
     private double velocity;
     private String path;
     private final transient Pane pane;
+    private transient ImageView imageView;
 
     public RigidiBody(String path) {
         this.path = path;
         this.pane = new Pane();
+        this.imageView = new ImageView( new Image(Objects.requireNonNull(getClass().getResource(path)).toString()));
     }
 
     public void mountImage() {
-        ImageView imageView = new ImageView( new Image(getClass().getResource(path).toString()));
         imageView.setFitWidth(this.width);
         imageView.setFitHeight(this.height);
         imageView.setLayoutX(coordinates.getX());
         imageView.setLayoutY(coordinates.getY());
         this.pane.getChildren().add(imageView);
     }
+
+
+    public ImageView getImageView() {
+        return imageView;
+    }
+
 
     public Pane getPane() {
         return pane;
