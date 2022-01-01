@@ -56,17 +56,17 @@ public class HomeController {
     @FXML
     static Hero hero;
 
+    private final Island islandStart = new Island();
+    private final Island island = new Island();
+    private final Island island1 = new Island();
+    private final Island island2 = new Island();
+    private final Island island3 = new Island();
+    private final FloatingIsland floatingIsland = new FloatingIsland();
+
     private void initGame() throws IOException{
         hero = new Hero("/assets/helmet/player.png");
         gameScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("gameScreen.fxml")));
 
-        Island islandStart = new Island();
-        Island island = new Island();
-        Island island1 = new Island();
-        Island island2 = new Island();
-        Island island3 = new Island();
-
-        FloatingIsland floatingIsland = new FloatingIsland();
 
         hero.getCoordinates().setY(327);
         hero.getCoordinates().setX(100);
@@ -79,7 +79,7 @@ public class HomeController {
         island.getCoordinates().setX(floatingIsland.getCoordinates().getX() - 100);
         island.getCoordinates().setY(440);
         island1.getCoordinates().setX(floatingIsland.getCoordinates().getX() + 250);
-        island1.getCoordinates().setY(500);
+        island1.getCoordinates().setY(390);
 
         island2.getCoordinates().setX(island1.getCoordinates().getX() + 320);
         island2.getCoordinates().setY(420);
@@ -89,7 +89,6 @@ public class HomeController {
 
         island1.setHeight(100);
         island1.setWidth(200);
-
 
         island2.setHeight(100);
         island2.setWidth(200);
@@ -107,19 +106,18 @@ public class HomeController {
 
         hero.mountImage();
 
-        if (flag) {
-            islands.add(islandStart);
-            islands.add(island);
-            islands.add(floatingIsland);
-            //islands.add(island1);
-            //islands.add(island2);
-            //islands.add(island3);
-            islands.forEach(RigidiBody::mountImage);
-        }
+       if (flag) {
+           islands.add(islandStart);
+           islands.add(island);
+           islands.add(island1);
+           islands.add(island2);
+           islands.add(island3);
+           islands.add(floatingIsland);
+           islands.forEach(RigidiBody::mountImage);
 
+       }
         gameScreen.getChildren().add(hero.getPane());
         islands.forEach(is -> gameScreen.getChildren().add(is.getPane()));
-
     }
 
     @FXML
@@ -193,42 +191,21 @@ public class HomeController {
     }
 
     private void moveIslands() {
-        Timeline moveTimeline = new Timeline();
 
-        synchronized (islands) {
-            for (Island island: islands) {
-                double lay_x = island.getImageView().getLayoutX();
-                moveTimeline.setCycleCount(1);
-                moveTimeline.setAutoReverse(false);
-                moveTimeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.2), actionEvent -> {
-                    island.getImageView().setLayoutX(lay_x - 100);
-                }));
-                moveTimeline.play();
-            }
-        }
+      if (!AnimationController.isPaused) {
+          islands.forEach(Island::move);
+      }
 
-        AnimationController.timelines.add(moveTimeline);
+      for (Island i: islands) {
+          if (i.getPane().getLayoutX() == gameScreen.getBoundsInParent().getMinX()) {
+                i.getPane().setLayoutX(gameScreen.getBoundsInParent().getMaxX() + 150);
+          }
+      }
     }
 
     private void checkCollisions() {
 
     }
-
-    private void loadIsland() throws InterruptedException {
-
-    }
-
-    private void loadFloatingIsland() {
-        Island is = new Island();
-        is.getCoordinates().setY(390);
-        is.getCoordinates().setX(1000);
-        is.setWidth(200);
-        is.setHeight(100);
-        is.mountImage();
-        islands.add(is);
-        gameScreen.getChildren().add(islands.get(islands.size() - 1).getPane()); //after added, make it visible in gameScreen
-    }
-
 
     private void loadRedOrc() {
 
