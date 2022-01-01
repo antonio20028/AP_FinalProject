@@ -44,20 +44,14 @@ public class GameScreenController {
     private Label lblPause;
 
 
-    @FXML
-    static Label txtPlayerPosition;
-
     public static TableData currentGame;
-
 
     @FXML
     protected  void btnSaveClicked() throws IOException {
         UIAnimationControl.startButtonIllusionAnimation(btnSave, 40, 40);
-        System.out.println(HomeApplication.getDatabase().getSavedGames().size());
         currentGame.update(HomeController.hero, HomeController.islands, HomeController.coins);
         currentGame.write();
     }
-
 
     @FXML
     protected void btnHomeClicked() throws  IOException {
@@ -68,6 +62,7 @@ public class GameScreenController {
 
     @FXML
     protected void btnPauseClicked() throws IOException {
+
         UIAnimationControl.startButtonIllusionAnimation(btnPause, 40, 40);
         if (AnimationController.timelines.get(0).getStatus() == Animation.Status.RUNNING) {
             lblPause.setVisible(true);

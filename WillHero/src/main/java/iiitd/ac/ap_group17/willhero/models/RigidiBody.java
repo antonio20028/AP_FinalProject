@@ -25,8 +25,8 @@ public abstract class RigidiBody implements Serializable {
     public void mountImage() {
         imageView.setFitWidth(this.width);
         imageView.setFitHeight(this.height);
-        imageView.setLayoutX(coordinates.getX());
-        imageView.setLayoutY(coordinates.getY());
+        pane.setLayoutX(coordinates.getX());
+        pane.setLayoutY(coordinates.getY());
         this.pane.getChildren().add(imageView);
     }
 

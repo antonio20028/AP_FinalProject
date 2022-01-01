@@ -1,6 +1,7 @@
 package iiitd.ac.ap_group17.willhero.models;
 
 import iiitd.ac.ap_group17.willhero.AnimationController;
+import iiitd.ac.ap_group17.willhero.HomeController;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -9,37 +10,22 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public class Hero extends Character implements Jumpable{
+    private int position;
 
     ArrayList<Weapon> weapons  = new ArrayList<>();
 
-    //ArrayList<Orc> orcs = new ArrayList<>();
-
     public Hero(String path) {
         super(path);
+        this.position = 0;
 
-//        if(other instanceof Orc){
-//
-//        }
+    }
 
-//        for (Weapon weapon : weapons) {
-//            if (weapon.getCoordinates() == other.getCoordinates()) {
-//                if(getLife()==0){
-//                    die();
-//                    fall();
-//                }
-//            }
-//        }
+    public int getPosition() {
+        return position;
+    }
 
-//        for(Orc orc : orcs){
-//            if (orc.getCoordinates() == other.getCoordinates()) {
-//                //need to set life to 0 before calling die!?
-//                if(getLife()==0){
-//                    die();
-//                    fall();
-//                }
-//            }
-//        }
-
+    public void increasePosition(int v) {
+        this.position = this.position + v;
     }
 
     public ArrayList<Weapon> getWeapons() {
@@ -82,12 +68,7 @@ public class Hero extends Character implements Jumpable{
         if (other instanceof Island island) {
             System.out.println("I am on collision");
         } else if (other instanceof  Orc orc) {
-            System.out.println("I am on collision");
-        } else if(other instanceof Obstacle obstacle){
-            System.out.println("I am on collision");
-        }else if(other instanceof Weapon weapon){
-            System.out.println("I am on collision");
+
         }
     }
-
 }

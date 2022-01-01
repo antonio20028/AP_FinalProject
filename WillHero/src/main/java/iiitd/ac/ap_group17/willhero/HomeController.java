@@ -7,17 +7,24 @@ import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.util.Duration;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static javafx.scene.layout.Background.EMPTY;
 
 public class HomeController {
 
@@ -53,17 +60,29 @@ public class HomeController {
     @FXML
     static Hero hero;
 
+
+    private Label txtHeroPosition;
+
+    final Island islandStart = new Island();
+    final Island island = new Island();
+    final Island island1 = new Island();
+    final Island island2 = new Island();
+    final Island island3 = new Island();
+    final FloatingIsland floatingIsland = new FloatingIsland();
+
     private void initGame() throws IOException{
         hero = new Hero("/assets/helmet/player.png");
+
         gameScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("gameScreen.fxml")));
+        txtHeroPosition = new Label(String.valueOf(hero.getPosition()));
 
-        Island islandStart = new Island();
-        Island island = new Island();
-        Island island1 = new Island();
-        Island island2 = new Island();
-        Island island3 = new Island();
+        txtHeroPosition.setLayoutX(493.0);
+        txtHeroPosition.setLayoutY(30);
+        txtHeroPosition.setTextFill(Color.WHITE);
+        txtHeroPosition.setFont(new Font("Franklin Gothic Book", 50));
 
-        FloatingIsland floatingIsland = new FloatingIsland();
+
+
 
         hero.getCoordinates().setY(327);
         hero.getCoordinates().setX(100);
@@ -76,7 +95,7 @@ public class HomeController {
         island.getCoordinates().setX(floatingIsland.getCoordinates().getX() - 100);
         island.getCoordinates().setY(440);
         island1.getCoordinates().setX(floatingIsland.getCoordinates().getX() + 250);
-        island1.getCoordinates().setY(500);
+        island1.getCoordinates().setY(390);
 
         island2.getCoordinates().setX(island1.getCoordinates().getX() + 320);
         island2.getCoordinates().setY(420);
@@ -86,7 +105,6 @@ public class HomeController {
 
         island1.setHeight(100);
         island1.setWidth(200);
-
 
         island2.setHeight(100);
         island2.setWidth(200);
@@ -104,19 +122,20 @@ public class HomeController {
 
         hero.mountImage();
 
-        if (flag) {
-            islands.add(islandStart);
-            islands.add(island);
-            islands.add(floatingIsland);
-            //islands.add(island1);
-            //islands.add(island2);
-            //islands.add(island3);
-            islands.forEach(RigidiBody::mountImage);
-        }
+       if (flag) {
+           islands.add(islandStart);
+           islands.add(island);
+           islands.add(island1);
+           islands.add(island2);
+           islands.add(island3);
+           islands.add(floatingIsland);
+           islands.forEach(RigidiBody::mountImage);
 
+       }
+
+        gameScreen.getChildren().add(txtHeroPosition);
         gameScreen.getChildren().add(hero.getPane());
         islands.forEach(is -> gameScreen.getChildren().add(is.getPane()));
-
     }
 
     @FXML
@@ -130,12 +149,15 @@ public class HomeController {
                 @Override
                 public void handle(KeyEvent event) {
                     if (event.getCode() == KeyCode.SPACE) {
-                        try {
-                            moveIslands();
-                            checkCollisions();
-                        } catch (NullPointerException e) {
-                            System.out.println("Start Game");
-                        }
+                       if (!AnimationController.isPaused) {
+                           try {
+                               moveIslands();
+                               checkCollisions();
+                               updatePositionLabel(1);
+                           } catch (NullPointerException e) {
+                               e.printStackTrace();
+                           }
+                       }
                     }
                 }
             });
@@ -190,42 +212,19 @@ public class HomeController {
     }
 
     private void moveIslands() {
-        Timeline moveTimeline = new Timeline();
 
-        synchronized (islands) {
-            for (Island island: islands) {
-                double lay_x = island.getImageView().getLayoutX();
-                moveTimeline.setCycleCount(1);
-                moveTimeline.setAutoReverse(false);
-                moveTimeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.2), actionEvent -> {
-                    island.getImageView().setLayoutX(lay_x - 100);
-                }));
-                moveTimeline.play();
-            }
-        }
-
-        AnimationController.timelines.add(moveTimeline);
+        islands.forEach(Island::move);
+      for (Island i: islands) {
+          if (i.getPane().getLayoutX() == gameScreen.getBoundsInParent().getMinX()) {
+                i.getPane().setLayoutX(gameScreen.getBoundsInParent().getMaxX() + 150);
+          }
+      }
     }
 
     private void checkCollisions() {
 
-    }
-
-    private void loadIsland() throws InterruptedException {
 
     }
-
-    private void loadFloatingIsland() {
-        Island is = new Island();
-        is.getCoordinates().setY(390);
-        is.getCoordinates().setX(1000);
-        is.setWidth(200);
-        is.setHeight(100);
-        is.mountImage();
-        islands.add(is);
-        gameScreen.getChildren().add(islands.get(islands.size() - 1).getPane()); //after added, make it visible in gameScreen
-    }
-
 
     private void loadRedOrc() {
 
@@ -255,5 +254,10 @@ public class HomeController {
             gameScreen.getChildren().add(coinSet);
         }
 
+    }
+
+    public void updatePositionLabel(int v) {
+        hero.increasePosition(v);
+        txtHeroPosition.setText(String.valueOf(hero.getPosition()));
     }
 }

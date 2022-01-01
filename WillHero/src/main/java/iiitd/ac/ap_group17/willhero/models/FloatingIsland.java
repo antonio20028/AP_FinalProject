@@ -13,7 +13,7 @@ public class FloatingIsland extends Island {
         this.setWidth(200);
         this.getCoordinates().setX(550);
         this.getCoordinates().setY(175);
-        move();
+        this.floatAnimation();
     }
 
     private void  floatAnimation() {
@@ -27,6 +27,6 @@ public class FloatingIsland extends Island {
 
     @Override
     public void move() {
-        this.floatAnimation();
+        super.move();
     }
 }
