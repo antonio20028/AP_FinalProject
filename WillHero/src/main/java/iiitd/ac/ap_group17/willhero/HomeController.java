@@ -7,14 +7,14 @@ import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static javafx.scene.layout.Background.EMPTY;
 
 public class HomeController {
 
@@ -61,6 +63,13 @@ public class HomeController {
 
     private Label txtHeroPosition;
 
+    final Island islandStart = new Island();
+    final Island island = new Island();
+    final Island island1 = new Island();
+    final Island island2 = new Island();
+    final Island island3 = new Island();
+    final FloatingIsland floatingIsland = new FloatingIsland();
+
     private void initGame() throws IOException{
         hero = new Hero("/assets/helmet/player.png");
 
@@ -72,12 +81,7 @@ public class HomeController {
         txtHeroPosition.setTextFill(Color.WHITE);
         txtHeroPosition.setFont(new Font("Franklin Gothic Book", 50));
 
-        final Island islandStart = new Island();
-        final Island island = new Island();
-        final Island island1 = new Island();
-        final Island island2 = new Island();
-        final Island island3 = new Island();
-        final FloatingIsland floatingIsland = new FloatingIsland();
+
 
 
         hero.getCoordinates().setY(327);
@@ -218,6 +222,7 @@ public class HomeController {
     }
 
     private void checkCollisions() {
+
 
     }
 

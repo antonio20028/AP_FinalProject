@@ -44,9 +44,6 @@ public class GameScreenController {
     private Label lblPause;
 
 
-    @FXML
-    private Label txtPlayerPosition;
-
     public static TableData currentGame;
 
     @FXML
@@ -55,7 +52,6 @@ public class GameScreenController {
         currentGame.update(HomeController.hero, HomeController.islands, HomeController.coins);
         currentGame.write();
     }
-
 
     @FXML
     protected void btnHomeClicked() throws  IOException {
