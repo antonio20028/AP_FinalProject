@@ -10,11 +10,22 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public class Hero extends Character implements Jumpable{
+    private int position;
+
     ArrayList<Weapon> weapons  = new ArrayList<>();
 
     public Hero(String path) {
         super(path);
+        this.position = 0;
 
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void increasePosition(int v) {
+        this.position = this.position + v;
     }
 
     public ArrayList<Weapon> getWeapons() {

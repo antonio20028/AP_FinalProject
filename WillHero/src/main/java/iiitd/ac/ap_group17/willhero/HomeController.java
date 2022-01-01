@@ -15,6 +15,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.util.Duration;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,16 +58,26 @@ public class HomeController {
     @FXML
     static Hero hero;
 
-    private final Island islandStart = new Island();
-    private final Island island = new Island();
-    private final Island island1 = new Island();
-    private final Island island2 = new Island();
-    private final Island island3 = new Island();
-    private final FloatingIsland floatingIsland = new FloatingIsland();
+
+    private Label txtHeroPosition;
 
     private void initGame() throws IOException{
         hero = new Hero("/assets/helmet/player.png");
+
         gameScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("gameScreen.fxml")));
+        txtHeroPosition = new Label(String.valueOf(hero.getPosition()));
+
+        txtHeroPosition.setLayoutX(493.0);
+        txtHeroPosition.setLayoutY(30);
+        txtHeroPosition.setTextFill(Color.WHITE);
+        txtHeroPosition.setFont(new Font("Franklin Gothic Book", 50));
+
+        final Island islandStart = new Island();
+        final Island island = new Island();
+        final Island island1 = new Island();
+        final Island island2 = new Island();
+        final Island island3 = new Island();
+        final FloatingIsland floatingIsland = new FloatingIsland();
 
 
         hero.getCoordinates().setY(327);
@@ -116,6 +128,8 @@ public class HomeController {
            islands.forEach(RigidiBody::mountImage);
 
        }
+
+        gameScreen.getChildren().add(txtHeroPosition);
         gameScreen.getChildren().add(hero.getPane());
         islands.forEach(is -> gameScreen.getChildren().add(is.getPane()));
     }
@@ -131,12 +145,15 @@ public class HomeController {
                 @Override
                 public void handle(KeyEvent event) {
                     if (event.getCode() == KeyCode.SPACE) {
-                        try {
-                            moveIslands();
-                            checkCollisions();
-                        } catch (NullPointerException e) {
-                            System.out.println("Start Game");
-                        }
+                       if (!AnimationController.isPaused) {
+                           try {
+                               moveIslands();
+                               checkCollisions();
+                               updatePositionLabel(1);
+                           } catch (NullPointerException e) {
+                               e.printStackTrace();
+                           }
+                       }
                     }
                 }
             });
@@ -192,10 +209,7 @@ public class HomeController {
 
     private void moveIslands() {
 
-      if (!AnimationController.isPaused) {
-          islands.forEach(Island::move);
-      }
-
+        islands.forEach(Island::move);
       for (Island i: islands) {
           if (i.getPane().getLayoutX() == gameScreen.getBoundsInParent().getMinX()) {
                 i.getPane().setLayoutX(gameScreen.getBoundsInParent().getMaxX() + 150);
@@ -235,5 +249,10 @@ public class HomeController {
             gameScreen.getChildren().add(coinSet);
         }
 
+    }
+
+    public void updatePositionLabel(int v) {
+        hero.increasePosition(v);
+        txtHeroPosition.setText(String.valueOf(hero.getPosition()));
     }
 }

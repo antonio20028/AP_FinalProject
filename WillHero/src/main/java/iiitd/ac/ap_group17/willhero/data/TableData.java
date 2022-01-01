@@ -20,19 +20,16 @@ public class TableData implements Serializable {
     private ArrayList<Island> islands;
     private Hero hero;
     private ArrayList<CoinSet> coins;
-    private static int tdID = 0;
 
 
     private final String name;
-    private String date;
+    private final String date;
 
     public TableData() {
-        tdID++;
         LocalDateTime dateTime = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E, MMM dd yyyy HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E, MMM dd yyyy HH:mm");
         date = dateTime.format(formatter);
-        name = "Game " + tdID + " " + date;
-
+        name = "Game saved on " + " " + date;
     }
 
     //this method is to load Game
@@ -72,9 +69,5 @@ public class TableData implements Serializable {
 
     public String getDate() {
         return date;
-    }
-
-    public static int getTdID() {
-        return tdID;
     }
 }
