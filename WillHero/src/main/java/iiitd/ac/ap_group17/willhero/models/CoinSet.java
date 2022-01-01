@@ -8,8 +8,6 @@ import java.util.SimpleTimeZone;
 
 public class CoinSet extends Group implements Cloneable, Serializable {
 
-   // private ArrayList<Coin> coins = new ArrayList<>();
-
     public CoinSet() {
         Coin coin = new Coin();
         Coin coin1 = new Coin();

@@ -24,4 +24,5 @@ public class GreenOrc extends Orc implements Jumpable{
         AnimationController.timelines.add(time);
         time.play();
     }
+
 }

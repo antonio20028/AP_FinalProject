@@ -1,14 +1,13 @@
 package iiitd.ac.ap_group17.willhero.models;
 
 import iiitd.ac.ap_group17.willhero.AnimationController;
-import iiitd.ac.ap_group17.willhero.HomeController;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
-import iiitd.ac.ap_group17.willhero.HomeController;
 
 public class Character extends RigidiBody {
+
     private int life;
 
     public Character(String path) {
@@ -24,8 +23,11 @@ public class Character extends RigidiBody {
         this.life = this.life - value;
     }
 
-    //die
     public void die(){
+
+//        if(life==0){
+//            fall();
+//        }
 
     }
 

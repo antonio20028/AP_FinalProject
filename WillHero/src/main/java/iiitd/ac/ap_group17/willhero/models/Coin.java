@@ -10,4 +10,5 @@ public class Coin extends RigidiBody implements Collectable {
     protected Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
+
 }

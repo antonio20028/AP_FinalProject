@@ -8,7 +8,6 @@ public class PageController {
     static AnchorPane previousPage;
     static AnchorPane nextPage;
 
-
     static  void goToPage(AnchorPane from, AnchorPane to, String name) {
         PageController.previousPage = from;
         PageController.nextPage = to;

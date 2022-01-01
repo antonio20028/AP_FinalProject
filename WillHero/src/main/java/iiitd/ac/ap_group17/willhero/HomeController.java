@@ -13,14 +13,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
 import javafx.util.Duration;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class HomeController {
 

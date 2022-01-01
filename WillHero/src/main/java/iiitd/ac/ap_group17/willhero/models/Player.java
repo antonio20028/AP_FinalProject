@@ -1,7 +1,9 @@
 package iiitd.ac.ap_group17.willhero.models;
 
 public class Player {
+
     private String nickName;
+
     private int score;
 
     public Player(String nickName) {
@@ -23,7 +25,6 @@ public class Player {
     public void setScore(int score) {
         this.score = score;
     }
-
 
 
 }
