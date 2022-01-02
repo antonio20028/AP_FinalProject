@@ -33,11 +33,11 @@ public class Orc extends Character implements Cloneable{
     @Override
     public void onCollision(RigidiBody other) {
 
-        for (Weapon weapon : weapons) {
-            if (weapon.getCoordinates() == other.getCoordinates()) {
-                fall();
-            }
-        }
+//        for (Weapon weapon : weapons) {
+//            if (weapon.getCoordinates() == other.getCoordinates()) {
+//                fall();
+//            }
+//        }
 
     }
 

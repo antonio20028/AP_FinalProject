@@ -65,15 +65,12 @@ public class Hero extends Character implements Jumpable{
     @Override
     public void onCollision(RigidiBody other) {
         if ((other instanceof Island island)) {
-            //fall();
+
             System.out.println("I am on collision");
         } else if (other instanceof  Orc orc) {
+            System.out.println("*");
             fall();
         }else  if(other instanceof Obstacle obstacle){
-            fall();
-        }else if(other instanceof Sword s){
-            fall();
-        }else if(other instanceof Rocket rocket){
             fall();
         }
     }

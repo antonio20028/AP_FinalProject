@@ -10,6 +10,7 @@ import javafx.util.Duration;
 import java.util.Timer;
 
 public class Island extends RigidiBody implements Cloneable{
+
     public Island() {
         super("/assets/islands/island.png");
     }

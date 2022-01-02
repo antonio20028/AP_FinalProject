@@ -2,7 +2,6 @@ package iiitd.ac.ap_group17.willhero;
 
 import iiitd.ac.ap_group17.willhero.data.TableData;
 import iiitd.ac.ap_group17.willhero.models.*;
-import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,8 +13,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -50,6 +47,7 @@ public class HomeController {
 
     static final ArrayList<Island> islands = new ArrayList<>();
     static ArrayList<CoinSet> coins = new ArrayList<>();
+    static final ArrayList<Orc> orcs = new ArrayList<>();
     static boolean flag = true;
     static MenuAnimationController menuAnimationController = new MenuAnimationController();
 
@@ -68,6 +66,9 @@ public class HomeController {
 
     private void initGame() throws IOException{
         hero = new Hero("/assets/helmet/player.png");
+        RedOrc orc = new RedOrc();
+        //orc = new Orc("/assets/orcs/Orc1.png","black");
+
 
         gameScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("gameScreen.fxml")));
         txtHeroPosition = new Label(String.valueOf(hero.getPosition()));
@@ -85,11 +86,17 @@ public class HomeController {
         hero.setHeight(68);
         hero.setWidth(75);
 
+        orc.getCoordinates().setY(327);
+        orc.getCoordinates().setX(120);
+        hero.setHeight(70);
+        orc.setWidth(80);
+
         islandStart.getCoordinates().setX(100);
         islandStart.getCoordinates().setY(390);
 
         island.getCoordinates().setX(floatingIsland.getCoordinates().getX() - 100);
         island.getCoordinates().setY(440);
+
         island1.getCoordinates().setX(floatingIsland.getCoordinates().getX() + 250);
         island1.getCoordinates().setY(390);
 
@@ -117,6 +124,7 @@ public class HomeController {
         hero.jump();
 
         hero.mountImage();
+        //orc.mountImage();
 
        if (flag) {
            islands.add(islandStart);
@@ -127,11 +135,15 @@ public class HomeController {
            islands.add(floatingIsland);
            islands.forEach(RigidiBody::mountImage);
 
+           orcs.add(orc);
+           orcs.forEach(RigidiBody::mountImage);
+
        }
 
         gameScreen.getChildren().add(txtHeroPosition);
         gameScreen.getChildren().add(hero.getPane());
         islands.forEach(is -> gameScreen.getChildren().add(is.getPane()));
+        orcs.forEach(or -> gameScreen.getChildren().add(or.getPane()));
     }
 
     @FXML
@@ -148,8 +160,8 @@ public class HomeController {
                        if (!AnimationController.isPaused) {
                            try {
                                moveIslands();
-                               checkCollisions();
-                               //checker();
+                               //checkCollisions();
+                               checker();
                                updatePositionLabel(1);
                            } catch (NullPointerException e) {
                                e.printStackTrace();
@@ -232,15 +244,31 @@ public class HomeController {
     }
 
     private void checker(){
+        boolean coolided = false;
         for(Island is : islands){
-            if(!(is.getCoordinates().getX()==hero.getCoordinates().getX())){
-                while (hero.getCoordinates().getX()!=is.getCoordinates().getX()){
-                    hero.getCoordinates().setX(hero.getCoordinates().getX()-10);
-                }
+            if(is.getImageView().getBoundsInParent().intersects(hero.getImageView().getBoundsInParent())){
+                coolided = true;
                 hero.onCollision(is);
             }
         }
-    }
+
+//        for(Orc orc: orcs){
+//            if(orc.getImageView().getBoundsInParent().intersects(hero.getImageView().getBoundsInParent())){
+//                coolided = true;
+//                hero.onCollision(orc);
+//            }
+//        }
+        }
+//        for(Island is : islands){
+//            if(!(is.getCoordinates().getX()==hero.getCoordinates().getX())){
+//                while (hero.getCoordinates().getX()!=is.getCoordinates().getX()){
+//                    hero.getCoordinates().setX(hero.getCoordinates().getX()-10);
+//                }
+//                hero.onCollision(is);
+//            }
+//        }
+
+
 
     private void loadRedOrc() {
 
