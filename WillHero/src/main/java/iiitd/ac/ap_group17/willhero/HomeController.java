@@ -73,11 +73,11 @@ public class HomeController implements Initializable {
     @FXML
     public static Hero hero;
 
-    String str = "C:\\Users\\DEEKSHA SINGH\\OneDrive\\Documents\\AP_PROJECT\\AP_FinalProject\\WillHero\\src\\main\\resources\\sounds\\game-music-7408.mp3";
-    Media media = new Media(new File(str).toURI().toString());
-
-    MediaPlayer mediaPlayer = new MediaPlayer(media);
-    @Override
+//    String str = "C:\\Users\\DEEKSHA SINGH\\OneDrive\\Documents\\AP_PROJECT\\AP_FinalProject\\WillHero\\src\\main\\resources\\sounds\\game-music-7408.mp3";
+//    Media media = new Media(new File(str).toURI().toString());
+//
+//    MediaPlayer mediaPlayer = new MediaPlayer(media);
+//    @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
@@ -85,7 +85,7 @@ public class HomeController implements Initializable {
     @FXML
     public void setBtnPlaySound(ActionEvent event){
         UIAnimationControl.startButtonIllusionAnimation(btnPlaySound, 50, 50);
-        mediaPlayer.play();
+        //mediaPlayer.play();
     }
 
     private Label txtHeroPosition;
