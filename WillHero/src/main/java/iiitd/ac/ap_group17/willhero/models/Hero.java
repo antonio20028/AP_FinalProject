@@ -69,13 +69,22 @@ public class Hero extends Character implements Jumpable{
         if ((other instanceof Island island)) {
             System.out.println("");
         } else if (other instanceof  Orc orc) {
+            //upperbound
             if (this.getPane().getBoundsInParent().getMaxY() > orc.getPane().getBoundsInParent().getMaxY()) {
                if(this.getPane().getBoundsInParent().getMaxY() - orc.getPane().getBoundsInParent().getMinY() >= this.getHeight()) {
                    this.fall();
                }
             }
+            System.out.println("Orc:" + orc.getPane().getBoundsInParent());
+            System.out.println("Hero:" + this.getPane().getBoundsInParent());
+
+
+            //lateral bound
         }else  if(other instanceof Obstacle obstacle){
             fall();
+        } else if (other instanceof Treasure<?> treasure) {
+            treasure.openAnimation();
+            System.out.println("Collided with treasure");
         }
     }
 }

@@ -54,6 +54,8 @@ public class HomeController {
     static final ArrayList<Island> islands = new ArrayList<>();
     static ArrayList<CoinSet> coins = new ArrayList<>();
     static final ArrayList<Orc> orcs = new ArrayList<>();
+    static final ArrayList<Treasure<Weapon>> treasureWeapons = new ArrayList<>();
+    static final ArrayList<Treasure<Coin>>  treasureCoins = new ArrayList<>();
 
     static boolean flag = true;
     static MenuAnimationController menuAnimationController = new MenuAnimationController();
@@ -76,8 +78,6 @@ public class HomeController {
     private void initGame() throws IOException {
         hero = new Hero("/assets/helmet/player.png");
         RedOrc orc = new RedOrc();
-        //orc = new Orc("/assets/orcs/Orc1.png","black");
-
 
         gameScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("gameScreen.fxml")));
         txtHeroPosition = new Label(String.valueOf(hero.getPosition()));
@@ -87,7 +87,7 @@ public class HomeController {
         txtHeroPosition.setTextFill(Color.WHITE);
         txtHeroPosition.setFont(new Font("Franklin Gothic Book", 50));
 
-
+        TreasureWeapon treasureWeapon = new TreasureWeapon();
 
         fallingPlatform.getCoordinates().setX(50);
         fallingPlatform.getCoordinates().setY(390);
@@ -100,23 +100,29 @@ public class HomeController {
         hero.setWidth(75);
 
         orc.getCoordinates().setY(327);
-        orc.getCoordinates().setX(floatingIsland.getCoordinates().getX() - 100);
+        orc.getCoordinates().setX(900);
         hero.setHeight(70);
         orc.setWidth(80);
 
         islandStart.getCoordinates().setX(100);
         islandStart.getCoordinates().setY(390);
 
-        island.getCoordinates().setX(floatingIsland.getCoordinates().getX() - 100);
+        island.getCoordinates().setX(450);
         island.getCoordinates().setY(390);
 
-        island1.getCoordinates().setX(floatingIsland.getCoordinates().getX() + 250);
+        treasureWeapon.getCoordinates().setX(500);
+        treasureWeapon.getCoordinates().setY(335);
+
+        treasureWeapon.setHeight(60);
+        treasureWeapon.setWidth(100);
+
+        island1.getCoordinates().setX(850);
         island1.getCoordinates().setY(390);
 
-        island2.getCoordinates().setX(island1.getCoordinates().getX() + 320);
+        island2.getCoordinates().setX(1170);
         island2.getCoordinates().setY(390);
 
-        island3.getCoordinates().setX(floatingIsland.getCoordinates().getX() + 950);
+        island3.getCoordinates().setX(1600);
         island3.getCoordinates().setY(390);
 
         island1.setHeight(100);
@@ -151,15 +157,18 @@ public class HomeController {
            orcs.add(orc);
            orcs.forEach(RigidiBody::mountImage);
            orcs.forEach(Orc::jump);
+
+           treasureWeapons.add(treasureWeapon);
+           treasureWeapons.forEach(RigidiBody::mountImage);
        }
         gameScreen.getChildren().add(txtHeroPosition);
         gameScreen.getChildren().add(hero.getPane());
         islands.forEach(is -> gameScreen.getChildren().add(is.getPane()));
         orcs.forEach(or -> gameScreen.getChildren().add(or.getPane()));
         gameScreen.getChildren().add(fallingPlatform.getPane());
+        treasureWeapons.forEach(tr -> gameScreen.getChildren().add(tr.getPane()));
         HomeApplication.colliderThread.run();
     }
-
 
     @FXML
     protected void btnStartNewGameClicked() {
@@ -176,6 +185,7 @@ public class HomeController {
                            try {
                                moveIslands();
                                moveOrcs();
+                               moveTreasures();
                                updatePositionLabel(1);
                            } catch (NullPointerException e) {
                                e.printStackTrace();
@@ -239,7 +249,7 @@ public class HomeController {
         islands.forEach(Island::move);
       for (Island i: islands) {
           if (i.getPane().getLayoutX() == gameScreen.getBoundsInParent().getMinX()) {
-                i.getPane().setLayoutX(gameScreen.getBoundsInParent().getMaxX() + 150);
+                i.getPane().setLayoutX(gameScreen.getBoundsInParent().getMaxX() + 100);
           }
       }
 
@@ -249,24 +259,38 @@ public class HomeController {
         orcs.forEach(Orc::move);
         for (Orc orc: orcs) {
             if (orc.getPane().getLayoutX() == gameScreen.getBoundsInParent().getMinX()) {
-                orc.getPane().setLayoutX(gameScreen.getBoundsInParent().getMaxX() + 150);
+                orc.getPane().setLayoutX(gameScreen.getBoundsInParent().getMaxX() - 100);
             }
         }
     }
 
+    private void moveTreasures() {
+        treasureWeapons.forEach(Treasure::move);
+        for (Treasure treasure: treasureWeapons){
+            if (treasure.getPane().getLayoutX() == gameScreen.getBoundsInParent().getMinX()) {
+                treasure.getPane().setLayoutX(gameScreen.getBoundsInParent().getMaxX() - 100);
+            }
+        }
+    }
 
     public static void checkCollisions(){
 
-        boolean flagIsland = false;
-        boolean flagOrc = false;
+        boolean collisions[] = new boolean[10];
 
         Island tmp = null;
         Orc orc = null;
+        TreasureWeapon treasureWeapon = null;
 
         for (Island i: islands) {
             if (hero.onCollisionWith(i)){
                 tmp = i;
-                flagIsland = true;
+                collisions[0] = true;
+            }
+
+            for(Orc o: orcs) {
+                if (o.onCollisionWith(i)) {
+                    o.onCollision(i);
+                }
             }
         }
 
@@ -275,18 +299,31 @@ public class HomeController {
         for(Orc o: orcs) {
             if (hero.onCollisionWith(o)) {
                 orc = o;
-                flagOrc = true;
+                collisions[1] = true;
             }
         }
 
-        if (flagIsland) {
+        //for Treasures
+
+        for(Treasure treasure: treasureWeapons){
+            if (hero.onCollisionWith(treasure)) {
+                treasureWeapon = (TreasureWeapon) treasure;
+                collisions[2] = true;
+            }
+        }
+
+        if (collisions[0]) {
             hero.onCollision(tmp);
         } else if (hero.onCollisionWith(fallingPlatform)) {
             hero.onCollision(fallingPlatform);
         }
 
-        if (flagOrc) {
+        if (collisions[1]) {
             hero.onCollision(orc);
+        }
+
+        if (collisions[2]) {
+            hero.onCollision(treasureWeapon);
         }
 
 

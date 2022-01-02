@@ -45,13 +45,11 @@ public class Orc extends Character implements Cloneable, Jumpable{
 
     @Override
     public void onCollision(RigidiBody other) {
+        if (other instanceof Obstacle) {
+            this.fall();
+        } else if (other instanceof Weapon weapon) {
 
-//        for (Weapon weapon : weapons) {
-//            if (weapon.getCoordinates() == other.getCoordinates()) {
-//                fall();
-//            }
-//        }
-
+        }
     }
 
     @Override

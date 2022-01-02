@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Treasure <T extends Collectable> extends RigidiBody {
     private ArrayList<T> collectables = new ArrayList<>();
@@ -28,20 +29,29 @@ public class Treasure <T extends Collectable> extends RigidiBody {
     }
 
     public void openAnimation() {
-        ImageView img_1 = new ImageView(new Image(getClass().getResource(getPath()).toString()));
-        ImageView img_2 = new ImageView(new Image(getClass().getResource(this.path2).toString()));
 
         Timeline timeline = new Timeline();
         timeline.setAutoReverse(false);
-
-        this.getPane().getChildren().add(img_1);
+        timeline.setCycleCount(1);
         timeline.getKeyFrames().add(new KeyFrame(
-                Duration.millis(200), (actionEvent -> {
-            this.getPane().getChildren().remove(img_1);
-            this.getPane().getChildren().add(img_2);
+                Duration.seconds(0.3), (actionEvent -> {
+            this.getImageView().setImage(new Image(Objects.requireNonNull(getClass().getResource(this.path2)).toString()));
+
         })));
 
         AnimationController.timelines.add(timeline);
         timeline.play();
+    }
+
+    @Override
+    public void move() {
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(1);
+        timeline.setAutoReverse(false);
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.3), actionEvent -> {
+            this.getPane().setLayoutX(this.getPane().getLayoutX() - 100);
+        }));
+        timeline.play();
+        AnimationController.timelines.add(timeline);
     }
 }

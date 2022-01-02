@@ -11,8 +11,8 @@ public class FloatingIsland extends Island {
     public FloatingIsland() {
         this.setHeight(100);
         this.setWidth(200);
-        this.getCoordinates().setX(550);
-        this.getCoordinates().setY(175);
+        this.getCoordinates().setX(600);
+        this.getCoordinates().setY(250);
         this.floatAnimation();
     }
 
