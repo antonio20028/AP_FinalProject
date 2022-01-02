@@ -12,7 +12,7 @@ public class ColliderThread implements Runnable{
     public void run() {
         Timeline timeline = new Timeline();
         KeyFrame frame = new KeyFrame(Duration.millis(20), actionEvent -> {
-           HomeController.checkCollisions();
+           GameScreenController.checkCollisions();
         });
         timeline.getKeyFrames().add(frame);
         timeline.setCycleCount(Timeline.INDEFINITE);

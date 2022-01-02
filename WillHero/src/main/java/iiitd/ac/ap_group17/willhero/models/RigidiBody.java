@@ -1,10 +1,14 @@
 package iiitd.ac.ap_group17.willhero.models;
 
+import iiitd.ac.ap_group17.willhero.GameScreenController;
+import iiitd.ac.ap_group17.willhero.HomeController;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.Objects;
 
 public abstract class RigidiBody implements Serializable {
@@ -88,13 +92,15 @@ public abstract class RigidiBody implements Serializable {
     }
 
     public boolean onCollisionWith(RigidiBody other) {
-       // return  (this.getPane().getLayoutX() + this.getPane().getHeight() / 2 > other.getPane().getLayoutX() && this.getPane().getLayoutX() < other.getPane().getLayoutX() + other.getPane().getWidth()/2 && this.getPane().getLayoutY()+ this.getPane().getHeight()/2 > other.getPane().getLayoutY() &&
-         //       this.getPane().getLayoutY() < other.coordinates.getLayoutY()+ other.getPane().getLayoutY() + other.getPane().getHeight());
         return this.getPane().getBoundsInParent().intersects(other.getPane().getBoundsInParent());
     }
 
     public void destroy(){
         this.getPane().setVisible(false);
+        this.getPane().setLayoutX(1000);
+        this.getPane().setLayoutY(-100);
+        //GameScreenController.gameScreen.getChildren().removeIf(next -> next.getId().equals(this.getPane().getId()));
+
     }
 
     public void move(){

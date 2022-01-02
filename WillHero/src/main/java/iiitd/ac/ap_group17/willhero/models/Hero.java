@@ -1,7 +1,9 @@
 package iiitd.ac.ap_group17.willhero.models;
 
 import iiitd.ac.ap_group17.willhero.AnimationController;
+import iiitd.ac.ap_group17.willhero.GameScreenController;
 import iiitd.ac.ap_group17.willhero.HomeApplication;
+import iiitd.ac.ap_group17.willhero.HomeController;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -13,13 +15,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import static iiitd.ac.ap_group17.willhero.HomeController.gameScreen;
-import static iiitd.ac.ap_group17.willhero.HomeController.hero;
 
-public class Hero extends Character implements Jumpable{
+public class Hero extends Character implements Jumpable, Shooter{
     private int position;
 
-
-    ArrayList<Weapon> weapons  = new ArrayList<>();
+    private final ArrayList<Weapon> weapons  = new ArrayList<>();
+    private Weapon weapon;
     ArrayList<Coin> coins = new ArrayList<>();
 
     public Hero(String path) {
@@ -59,16 +60,51 @@ public class Hero extends Character implements Jumpable{
         startJump();
     }
 
-    public void useWeapon(Weapon weapon) {
-        if (weapon instanceof Rocket rocket) {
-            rocket.getPane().setVisible(true);
-            Timeline timeline = new Timeline();
-            timeline.setCycleCount(1);
-            timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5), new KeyValue(rocket.getPane().translateXProperty(), 500)));
-            timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5), new KeyValue(rocket.getPane().visibleProperty(), false)));
-            AnimationController.timelines.add(timeline);
-            timeline.play();
-        }
+    private int i = 0;
+    @Override
+    public void useWeapon() {
+
+       try {
+           GameScreenController.gameScreen.getChildren().add(this.getWeapon().getPane());
+           if (this.getWeapon() instanceof Rocket rocket) {
+               rocket.getPane().setVisible(true);
+               Timeline timeline = new Timeline();
+               timeline.setCycleCount(1);
+               timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5), new KeyValue(rocket.getPane().translateXProperty(), 500)));
+               timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5), actionEvent -> {
+                   rocket.destroy();
+               }));
+               AnimationController.timelines.add(timeline);
+               timeline.play();
+           }
+       } catch (IllegalArgumentException e) {
+           System.out.println("");
+       } finally {
+           i++;
+       }
+    }
+
+    @Override
+    public void upgradeWeapon(ArrayList<Weapon> newweapon) {
+        this.getWeapons().clear();
+        this.getWeapons().addAll(newweapon);
+    }
+
+    @Override
+    public Weapon getWeapon() {
+        return weapon;
+    }
+
+    @Override
+    public void set() {
+        Weapon currentWeapon = this.getWeapons().get(i);
+        currentWeapon.setHeight(50);
+        currentWeapon.setWidth(50);
+        currentWeapon.getCoordinates().setY(this.getCoordinates().getY());
+        currentWeapon.getCoordinates().setX(this.getCoordinates().getX());
+        currentWeapon.getPane().setVisible(false);
+        currentWeapon.mountImage();
+        this.weapon = currentWeapon;
     }
 
     @Override
@@ -79,37 +115,23 @@ public class Hero extends Character implements Jumpable{
             //upperbound
             if (this.getPane().getBoundsInParent().getMaxY() > orc.getPane().getBoundsInParent().getMaxY()) {
                if(this.getPane().getBoundsInParent().getMaxY() - orc.getPane().getBoundsInParent().getMinY() >= this.getHeight()) {
-                   //if(orc.getLife()==0){
-                       this.fall();
-                       gameOver();
-                   //}
+                   this.fall();
                }
             }
-            System.out.println("Orc:" + orc.getPane().getBoundsInParent());
-            System.out.println("Hero:" + this.getPane().getBoundsInParent());
-
 
             //lateral bound
         }else  if(other instanceof Obstacle obstacle){
             fall();
-            gameOver();
-        } else if (other instanceof Treasure<?> treasure) {
+        } else if (other instanceof TreasureWeapon treasure) {
             treasure.openAnimation();
-            for (Collectable weapon: treasure.getCollectables()) {
-                weapons.add((Weapon) weapon);
+            if (this.getWeapons().size() != 0) {
+                this.upgradeWeapon(treasure.getCollectables());
+                this.set();
+            } else {
+                weapons.addAll(treasure.getCollectables());
+                this.set();
             }
-//            for(Collectable coin : treasure.getCollectables()){
-//                coins.add((Coin) coin);
-//            }
-        }
-    }
 
-    public void gameOver(){
-        Text t = new Text("GAME OVER");
-        t.setX(200);
-        t.setY(200);
-        t.setFill(Color.BEIGE);
-        AnimationController.stopAll();
-        gameScreen.getChildren().add(t);
+        }
     }
 }

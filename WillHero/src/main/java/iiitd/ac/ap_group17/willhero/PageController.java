@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 public class PageController {
     static AnchorPane previousPage;
     static AnchorPane nextPage;
+    private AnchorPane nextCurrent;
 
     static  void goToPage(AnchorPane from, AnchorPane to, String name) {
         PageController.previousPage = from;
@@ -15,6 +16,14 @@ public class PageController {
         nextStage.setScene(new Scene(to));
         nextStage.setTitle(name);
         nextStage.show();
+    }
+
+    public void setNextCurrent(AnchorPane nextCurrent) {
+        this.nextCurrent = nextCurrent;
+    }
+
+    public AnchorPane getNextCurrent() {
+        return nextCurrent;
     }
 
     static void goBack(){

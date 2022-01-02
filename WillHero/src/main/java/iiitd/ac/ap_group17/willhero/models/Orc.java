@@ -48,12 +48,28 @@ public class Orc extends Character implements Cloneable, Jumpable{
         if (other instanceof Obstacle) {
             this.fall();
         } else if (other instanceof Weapon weapon) {
-
+            if(this instanceof RedOrc || this instanceof GreenOrc) {
+               if (weapon instanceof Rocket ) {
+                   this.fall();
+                   this.destroy();
+               }
+            }
         }
     }
 
     @Override
     public void jump() {
 
+    }
+
+    @Override
+    public Orc clone() {
+        try {
+            Orc clone = (Orc) super.clone();
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }
