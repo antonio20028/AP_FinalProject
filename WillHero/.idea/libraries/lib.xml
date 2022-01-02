@@ -1,10 +1,10 @@
 <component name="libraryTable">
   <library name="lib">
     <CLASSES>
-      <root url="file://$PATH_FX$/lib" />
+      <root url="file://$USER_HOME$/Dropbox/My PC (DESKTOP-8MHQC6J)/Downloads/openjfx-17.0.1_windows-x64_bin-sdk/javafx-sdk-17.0.1/lib" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
-    <jarDirectory url="file://$PATH_FX$/lib" recursive="false" />
+    <jarDirectory url="file://$USER_HOME$/Dropbox/My PC (DESKTOP-8MHQC6J)/Downloads/openjfx-17.0.1_windows-x64_bin-sdk/javafx-sdk-17.0.1/lib" recursive="false" />
   </library>
 </component>
