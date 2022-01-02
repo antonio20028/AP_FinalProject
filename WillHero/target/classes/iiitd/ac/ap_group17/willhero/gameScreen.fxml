@@ -52,7 +52,7 @@
          </Label>
          <AnchorPane layoutX="202.0" layoutY="125.0" prefHeight="251.0" prefWidth="349.0">
             <children>
-               <ImageView fitHeight="253.0" fitWidth="377.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
+               <ImageView fitHeight="253.0" fitWidth="377.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true" visible="false">
                   <image>
                      <Image url="@../../../../assets/controls/banner.png" />
                   </image>
@@ -64,7 +64,7 @@
                </Label>
                <AnchorPane layoutX="35.0" layoutY="92.0" prefHeight="64.0" prefWidth="130.0">
                   <children>
-                     <ImageView fitHeight="54.0" fitWidth="100.0" layoutX="30.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView fitHeight="54.0" fitWidth="100.0" layoutX="30.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" visible="false">
                         <image>
                            <Image url="@../../../../assets/controls/b_1_1.png" />
                         </image>
@@ -73,7 +73,7 @@
                </AnchorPane>
                <AnchorPane layoutX="168.0" layoutY="93.0" prefHeight="64.0" prefWidth="138.0">
                   <children>
-                     <ImageView fitHeight="54.0" fitWidth="130.0" layoutX="21.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView fitHeight="54.0" fitWidth="130.0" layoutX="21.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" visible="false">
                         <image>
                            <Image url="@../../../../assets/controls/b_2_1.png" />
                         </image>
