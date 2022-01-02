@@ -5,16 +5,22 @@ import iiitd.ac.ap_group17.willhero.HomeApplication;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
+import static iiitd.ac.ap_group17.willhero.HomeController.gameScreen;
+import static iiitd.ac.ap_group17.willhero.HomeController.hero;
 
 public class Hero extends Character implements Jumpable{
     private int position;
 
 
     ArrayList<Weapon> weapons  = new ArrayList<>();
+    ArrayList<Coin> coins = new ArrayList<>();
 
     public Hero(String path) {
         super(path);
@@ -73,7 +79,10 @@ public class Hero extends Character implements Jumpable{
             //upperbound
             if (this.getPane().getBoundsInParent().getMaxY() > orc.getPane().getBoundsInParent().getMaxY()) {
                if(this.getPane().getBoundsInParent().getMaxY() - orc.getPane().getBoundsInParent().getMinY() >= this.getHeight()) {
-                   this.fall();
+                   //if(orc.getLife()==0){
+                       this.fall();
+                       gameOver();
+                   //}
                }
             }
             System.out.println("Orc:" + orc.getPane().getBoundsInParent());
@@ -83,11 +92,24 @@ public class Hero extends Character implements Jumpable{
             //lateral bound
         }else  if(other instanceof Obstacle obstacle){
             fall();
+            gameOver();
         } else if (other instanceof Treasure<?> treasure) {
             treasure.openAnimation();
             for (Collectable weapon: treasure.getCollectables()) {
                 weapons.add((Weapon) weapon);
             }
+//            for(Collectable coin : treasure.getCollectables()){
+//                coins.add((Coin) coin);
+//            }
         }
+    }
+
+    public void gameOver(){
+        Text t = new Text("GAME OVER");
+        t.setX(200);
+        t.setY(200);
+        t.setFill(Color.BEIGE);
+        AnimationController.stopAll();
+        gameScreen.getChildren().add(t);
     }
 }

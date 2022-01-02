@@ -33,4 +33,10 @@ public class AnimationController {
         }
     }
 
+    public static void stopAll(){
+        for(Timeline t : timelines){
+            t.stop();
+        }
+    }
+
 }

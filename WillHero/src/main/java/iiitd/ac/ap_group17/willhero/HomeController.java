@@ -48,7 +48,7 @@ public class HomeController {
     private AnchorPane optionMenuScreen;
 
     @FXML
-    static AnchorPane gameScreen;
+    public static AnchorPane gameScreen;
 
 
     static final ArrayList<Island> islands = new ArrayList<>();
@@ -61,7 +61,7 @@ public class HomeController {
     static MenuAnimationController menuAnimationController = new MenuAnimationController();
 
     @FXML
-    static Hero hero;
+    public static Hero hero;
 
 
     private Label txtHeroPosition;
@@ -163,6 +163,7 @@ public class HomeController {
        }
         gameScreen.getChildren().add(txtHeroPosition);
         gameScreen.getChildren().add(hero.getPane());
+
         islands.forEach(is -> gameScreen.getChildren().add(is.getPane()));
         orcs.forEach(or -> gameScreen.getChildren().add(or.getPane()));
         gameScreen.getChildren().add(fallingPlatform.getPane());
@@ -285,6 +286,7 @@ public class HomeController {
             if (hero.onCollisionWith(i)){
                 tmp = i;
                 collisions[0] = true;
+
             }
 
             for(Orc o: orcs) {
@@ -293,7 +295,6 @@ public class HomeController {
                 }
             }
         }
-
 
         // for orcs
         for(Orc o: orcs) {
@@ -304,7 +305,6 @@ public class HomeController {
         }
 
         //for Treasures
-
         for(Treasure treasure: treasureWeapons){
             if (hero.onCollisionWith(treasure)) {
                 treasureWeapon = (TreasureWeapon) treasure;
@@ -328,6 +328,8 @@ public class HomeController {
 
 
     }
+
+
 
 
     private void loadRedOrc() {
