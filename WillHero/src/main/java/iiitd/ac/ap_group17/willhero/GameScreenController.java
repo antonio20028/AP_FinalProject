@@ -2,10 +2,13 @@ package iiitd.ac.ap_group17.willhero;
 
 import iiitd.ac.ap_group17.willhero.data.TableData;
 import javafx.animation.*;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
@@ -21,6 +24,12 @@ public class GameScreenController {
 
     @FXML
     private ImageView btnHome;
+
+    @FXML
+    private ImageView btnExit;
+
+    @FXML
+    private ImageView btnNewGame;
 
     @FXML
     private Pane backgroundImage;
@@ -67,5 +76,40 @@ public class GameScreenController {
             AnimationController.resumeAll();
         }
     }
+
+    @FXML
+    protected void btnExitClicked() {
+        UIAnimationControl.startButtonIllusionAnimation(btnExit, 130, 190);
+        System.exit(0);
+    }
+
+//    @FXML
+//    protected void btnStartNewGameClicked() {
+//        UIAnimationControl.startButtonIllusionAnimation(btnNewGame, 115, 255);
+//        try {
+//            initGame();
+//            flag = false;
+//            PageController.goToPage(homeRoot, gameScreen, "Win Hero");
+//            PageController.nextPage.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
+//                @Override
+//                public void handle(KeyEvent event) {
+//                    if (event.getCode() == KeyCode.SPACE) {
+//                        if (!AnimationController.isPaused) {
+//                            try {
+//                                moveIslands();
+//                                moveOrcs();
+//                                moveTreasures();
+//                                updatePositionLabel(1);
+//                            } catch (NullPointerException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    }
+//                }
+//            });
+//        } catch (IOException e){
+//            System.out.println("cant start the game");
+//        }
+//    }
 
 }

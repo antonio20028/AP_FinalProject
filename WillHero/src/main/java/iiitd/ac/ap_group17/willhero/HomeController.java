@@ -8,26 +8,36 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 
+import java.awt.event.ActionEvent;
+import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
+import java.util.ResourceBundle;
 
-public class HomeController {
+public class HomeController implements Initializable {
 
     @FXML
     private  ImageView btnNewGame;
+
+    @FXML
+    private ImageView btnPlaySound;
 
     @FXML
     private ImageView btnExit;
@@ -63,6 +73,20 @@ public class HomeController {
     @FXML
     public static Hero hero;
 
+    String str = "C:\\Users\\DEEKSHA SINGH\\OneDrive\\Documents\\AP_PROJECT\\AP_FinalProject\\WillHero\\src\\main\\resources\\sounds\\game-music-7408.mp3";
+    Media media = new Media(new File(str).toURI().toString());
+
+    MediaPlayer mediaPlayer = new MediaPlayer(media);
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
+
+    @FXML
+    public void setBtnPlaySound(ActionEvent event){
+        UIAnimationControl.startButtonIllusionAnimation(btnPlaySound, 50, 50);
+        mediaPlayer.play();
+    }
 
     private Label txtHeroPosition;
 
@@ -243,6 +267,8 @@ public class HomeController {
         UIAnimationControl.startButtonIllusionAnimation(btnGoHome, 50, 50);
         menuAnimationController.reverse();
     }
+
+
 
 
     private void moveIslands() {

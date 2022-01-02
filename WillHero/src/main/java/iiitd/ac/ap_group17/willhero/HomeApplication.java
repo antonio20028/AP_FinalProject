@@ -17,11 +17,14 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.net.URISyntaxException;
 import java.util.Objects;
 
 
@@ -31,10 +34,22 @@ public class HomeApplication extends Application  implements Serializable {
     private static Database database = new Database();
     static AnchorPane savedGameScreen;
     public static ColliderThread colliderThread;
+    public MediaPlayer backgroundsond;
+    private boolean On;
     //static MediaPlayer player;
 
     public static Database getDatabase() {
         return database;
+    }
+
+    public void playBackgroundMusic() throws URISyntaxException {
+        //String str = "/sounds/game-music-7408.mp3";
+        //String str = "C:\\Users\\DEEKSHA SINGH\\OneDrive\\Documents\\AP_PROJECT\\AP_FinalProject\\WillHero\\src\\main\\resources\\sounds\\game-music-7408.mp3";
+        Media media = new Media(getClass().getResource("/sounds/game-music-7408.mp3").toString());
+        backgroundsond = new MediaPlayer(media);
+            //backgroundsond = new MediaPlayer(new Media("C:\\Users\\DEEKSHA SINGH\\OneDrive\\Documents\\AP_PROJECT\\AP_FinalProject\\WillHero\\src\\main\\resources\\sounds\\game-music-7408.mp3").toURI().toString());
+            backgroundsond.setCycleCount(MediaPlayer.INDEFINITE);
+            backgroundsond.setAutoPlay(true);
     }
 
     public static void serialize() throws IOException {
@@ -71,7 +86,7 @@ public class HomeApplication extends Application  implements Serializable {
 //    Media media = new Media(new File(BACKGROUND_SONG));
 
     @Override
-    public void start(Stage stage) throws IOException, ClassNotFoundException {
+    public void start(Stage stage) throws IOException, ClassNotFoundException, URISyntaxException {
         FXMLLoader fxmlLoader = new FXMLLoader(HomeApplication.class.getResource("home.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1000, 600);
         stage.setTitle("Win Hero");
@@ -79,7 +94,7 @@ public class HomeApplication extends Application  implements Serializable {
         stage.setResizable(false);
         stage.setMaximized(false);
         stage.setScene(scene);
-
+        playBackgroundMusic();
         stage.show();
     }
 

@@ -42,7 +42,7 @@
                   <Image url="@../../../../assets/controls/b_11.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="71.0" fitWidth="81.0" layoutX="105.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="btnPlaySound" fx:id="btnPlaySound" fitHeight="71.0" fitWidth="81.0" layoutX="105.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../assets/Lovepik_com-401907244-golden-play-button.png" />
                </image>
