@@ -2,29 +2,24 @@ package iiitd.ac.ap_group17.willhero;
 
 import iiitd.ac.ap_group17.willhero.data.TableData;
 import iiitd.ac.ap_group17.willhero.models.*;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Bounds;
-import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.util.Duration;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import static javafx.scene.layout.Background.EMPTY;
 
 public class HomeController {
 
@@ -51,6 +46,7 @@ public class HomeController {
 
     @FXML
     static AnchorPane gameScreen;
+
 
     static final ArrayList<Island> islands = new ArrayList<>();
     static ArrayList<CoinSet> coins = new ArrayList<>();
@@ -153,6 +149,7 @@ public class HomeController {
                            try {
                                moveIslands();
                                checkCollisions();
+                               //checker();
                                updatePositionLabel(1);
                            } catch (NullPointerException e) {
                                e.printStackTrace();
@@ -222,8 +219,27 @@ public class HomeController {
     }
 
     private void checkCollisions() {
+        boolean coolided = false;
+        for(Island is: islands){
+            if(Math.abs(hero.getPane().getLayoutX())==Math.abs(is.getPane().getLayoutX())){
+                hero.getPane().setLayoutX(Math.abs(Math.abs(is.getCoordinates().getY())
+                -Math.abs(hero.getCoordinates().getY())) - 100);
+                coolided = true;
+                //hero.fall();
+                hero.onCollision(is);
+            }
+        }
+    }
 
-
+    private void checker(){
+        for(Island is : islands){
+            if(!(is.getCoordinates().getX()==hero.getCoordinates().getX())){
+                while (hero.getCoordinates().getX()!=is.getCoordinates().getX()){
+                    hero.getCoordinates().setX(hero.getCoordinates().getX()-10);
+                }
+                hero.onCollision(is);
+            }
+        }
     }
 
     private void loadRedOrc() {

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="homeRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="coverBackground" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iiitd.ac.ap_group17.willhero.HomeController">
+<AnchorPane fx:id="homeRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" styleClass="coverBackground" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iiitd.ac.ap_group17.willhero.HomeController">
    <stylesheets>
       <URL value="@style.css" />
    </stylesheets>
@@ -39,6 +40,11 @@
             <ImageView fx:id="btnGoHome" fitHeight="55.0" fitWidth="55.0" layoutX="345.0" layoutY="45.0" onMouseClicked="#btnGoHomeClicked" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../assets/controls/b_11.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="71.0" fitWidth="81.0" layoutX="105.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../assets/Lovepik_com-401907244-golden-play-button.png" />
                </image>
             </ImageView>
          </children>

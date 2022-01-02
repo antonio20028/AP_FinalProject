@@ -23,6 +23,9 @@ import java.io.*;
 import java.util.Objects;
 
 public class HomeApplication extends Application  implements Serializable {
+
+
+
     private static Database database = new Database();
     static AnchorPane savedGameScreen;
 
@@ -60,6 +63,8 @@ public class HomeApplication extends Application  implements Serializable {
         }
     }
 
+//    private static final String BACKGROUND_SONG = "sounds/game-music-7408.mp3";
+//    Media media = new Media(new File(BACKGROUND_SONG));
 
     @Override
     public void start(Stage stage) throws IOException, ClassNotFoundException {
@@ -70,6 +75,7 @@ public class HomeApplication extends Application  implements Serializable {
         stage.setResizable(false);
         stage.setMaximized(false);
         stage.setScene(scene);
+
         stage.show();
     }
 

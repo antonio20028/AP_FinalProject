@@ -78,6 +78,11 @@ public abstract class RigidiBody implements Serializable {
         this.velocity = velocity;
     }
 
+//    public void checkCollision(){
+//        if(h.getCoordinates().intersects(o)){
+//
+//        }
+//    }
     public void onCollision(RigidiBody other){
 
     }

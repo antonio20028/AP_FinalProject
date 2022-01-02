@@ -1,7 +1,6 @@
 package iiitd.ac.ap_group17.willhero.models;
 
 import iiitd.ac.ap_group17.willhero.AnimationController;
-import iiitd.ac.ap_group17.willhero.HomeController;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -65,10 +64,17 @@ public class Hero extends Character implements Jumpable{
 
     @Override
     public void onCollision(RigidiBody other) {
-        if (other instanceof Island island) {
+        if ((other instanceof Island island)) {
+            //fall();
             System.out.println("I am on collision");
         } else if (other instanceof  Orc orc) {
-
+            fall();
+        }else  if(other instanceof Obstacle obstacle){
+            fall();
+        }else if(other instanceof Sword s){
+            fall();
+        }else if(other instanceof Rocket rocket){
+            fall();
         }
     }
 }
