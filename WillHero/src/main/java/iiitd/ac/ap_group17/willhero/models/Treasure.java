@@ -1,6 +1,8 @@
 package iiitd.ac.ap_group17.willhero.models;
 
 import iiitd.ac.ap_group17.willhero.AnimationController;
+import iiitd.ac.ap_group17.willhero.GameScreenController;
+import iiitd.ac.ap_group17.willhero.HomeController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
@@ -34,9 +36,13 @@ public class Treasure <T extends Collectable> extends RigidiBody {
         timeline.setAutoReverse(false);
         timeline.setCycleCount(1);
         timeline.getKeyFrames().add(new KeyFrame(
-                Duration.seconds(0.3), (actionEvent -> {
+                Duration.millis(200), (actionEvent -> {
             this.getImageView().setImage(new Image(Objects.requireNonNull(getClass().getResource(this.path2)).toString()));
+        })));
 
+        timeline.getKeyFrames().add(new KeyFrame(
+                Duration.millis(500), (actionEvent -> {
+            this.destroy();
         })));
 
         AnimationController.timelines.add(timeline);

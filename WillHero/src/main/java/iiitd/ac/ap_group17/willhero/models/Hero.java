@@ -8,6 +8,7 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class Hero extends Character implements Jumpable{
     private int position;
@@ -84,7 +85,9 @@ public class Hero extends Character implements Jumpable{
             fall();
         } else if (other instanceof Treasure<?> treasure) {
             treasure.openAnimation();
-            System.out.println("Collided with treasure");
+            for (Collectable weapon: treasure.getCollectables()) {
+                weapons.add((Weapon) weapon);
+            }
         }
     }
 }

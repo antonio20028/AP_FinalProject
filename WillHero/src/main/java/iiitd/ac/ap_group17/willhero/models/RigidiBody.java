@@ -94,7 +94,7 @@ public abstract class RigidiBody implements Serializable {
     }
 
     public void destroy(){
-
+        this.getPane().setVisible(false);
     }
 
     public void move(){
