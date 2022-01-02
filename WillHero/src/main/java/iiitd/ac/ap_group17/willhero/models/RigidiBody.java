@@ -19,10 +19,10 @@ public abstract class RigidiBody implements Serializable {
     public RigidiBody(String path) {
         this.path = path;
         this.pane = new Pane();
-        this.imageView = new ImageView( new Image(Objects.requireNonNull(getClass().getResource(path)).toString()));
     }
 
     public void mountImage() {
+        this.imageView = new ImageView( new Image(Objects.requireNonNull(getClass().getResource(path)).toString()));
         imageView.setFitWidth(this.width);
         imageView.setFitHeight(this.height);
         pane.setLayoutX(coordinates.getX());
@@ -85,6 +85,12 @@ public abstract class RigidiBody implements Serializable {
 //    }
     public void onCollision(RigidiBody other){
 
+    }
+
+    public boolean onCollisionWith(RigidiBody other) {
+       // return  (this.getPane().getLayoutX() + this.getPane().getHeight() / 2 > other.getPane().getLayoutX() && this.getPane().getLayoutX() < other.getPane().getLayoutX() + other.getPane().getWidth()/2 && this.getPane().getLayoutY()+ this.getPane().getHeight()/2 > other.getPane().getLayoutY() &&
+         //       this.getPane().getLayoutY() < other.coordinates.getLayoutY()+ other.getPane().getLayoutY() + other.getPane().getHeight());
+        return this.getPane().getBoundsInParent().intersects(other.getPane().getBoundsInParent());
     }
 
     public void destroy(){

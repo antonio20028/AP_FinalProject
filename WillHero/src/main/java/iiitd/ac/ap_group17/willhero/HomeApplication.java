@@ -1,5 +1,7 @@
 package iiitd.ac.ap_group17.willhero;
 
+import javafx.scene.*;
+
 import iiitd.ac.ap_group17.willhero.data.Database;
 import iiitd.ac.ap_group17.willhero.data.TableData;
 import iiitd.ac.ap_group17.willhero.models.Rocket;
@@ -22,12 +24,14 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.util.Objects;
 
-public class HomeApplication extends Application  implements Serializable {
 
+public class HomeApplication extends Application  implements Serializable {
 
 
     private static Database database = new Database();
     static AnchorPane savedGameScreen;
+    public static ColliderThread colliderThread;
+    //static MediaPlayer player;
 
     public static Database getDatabase() {
         return database;
@@ -84,10 +88,18 @@ public class HomeApplication extends Application  implements Serializable {
     }
 
 
+
+    private void PlaySong() {
+
+
+    }
+
+
     @Override
     public void init() throws Exception {
         savedGameScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("savedgame.fxml")));
         GameScreenController.currentGame = new TableData();
+        colliderThread = new ColliderThread();
         deserialize();
         super.init();
     }

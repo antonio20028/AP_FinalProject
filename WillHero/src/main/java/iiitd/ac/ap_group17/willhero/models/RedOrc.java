@@ -6,7 +6,7 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
-public class RedOrc extends Orc implements Jumpable{
+public class RedOrc extends Orc {
 
     public RedOrc() {
         super("RED","/assets/orcs/RedOrc1.png");
@@ -25,7 +25,6 @@ public class RedOrc extends Orc implements Jumpable{
     public void move() {
         super.move();
     }
-
 
     @Override
     public void jump() {

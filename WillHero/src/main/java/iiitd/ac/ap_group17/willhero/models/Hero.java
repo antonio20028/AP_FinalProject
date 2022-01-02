@@ -1,6 +1,7 @@
 package iiitd.ac.ap_group17.willhero.models;
 
 import iiitd.ac.ap_group17.willhero.AnimationController;
+import iiitd.ac.ap_group17.willhero.HomeApplication;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 
 public class Hero extends Character implements Jumpable{
     private int position;
+
 
     ArrayList<Weapon> weapons  = new ArrayList<>();
 
@@ -65,11 +67,13 @@ public class Hero extends Character implements Jumpable{
     @Override
     public void onCollision(RigidiBody other) {
         if ((other instanceof Island island)) {
-
-            System.out.println("I am on collision");
+            System.out.println("");
         } else if (other instanceof  Orc orc) {
-            System.out.println("*");
-            fall();
+            if (this.getPane().getBoundsInParent().getMaxY() > orc.getPane().getBoundsInParent().getMaxY()) {
+               if(this.getPane().getBoundsInParent().getMaxY() - orc.getPane().getBoundsInParent().getMinY() >= this.getHeight()) {
+                   this.fall();
+               }
+            }
         }else  if(other instanceof Obstacle obstacle){
             fall();
         }
