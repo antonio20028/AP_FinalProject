@@ -24,11 +24,6 @@
                <Image url="@../../../../assets/controls/c.png" />
             </image>
          </ImageView>
-         <!--<Label fx:id="txtPlayerPosition" id="txtPos" layoutX="493.0" layoutY="30.0" text="0" textFill="WHITE">
-            <font>
-               <Font name="Franklin Gothic Book" size="50.0" />
-            </font>
-         </Label>-->
       
          <ImageView fx:id="btnHome" fitHeight="49.0" fitWidth="49.0" layoutX="21.0" layoutY="533.0" onMouseClicked="#btnHomeClicked" pickOnBounds="true" preserveRatio="true">
             <image>

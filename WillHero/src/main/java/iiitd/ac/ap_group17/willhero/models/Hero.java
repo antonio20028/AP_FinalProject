@@ -13,6 +13,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Random;
 
 import static iiitd.ac.ap_group17.willhero.HomeController.gameScreen;
 
@@ -97,7 +98,7 @@ public class Hero extends Character implements Jumpable, Shooter{
 
     @Override
     public void set() {
-        Weapon currentWeapon = this.getWeapons().get(i);
+        Weapon currentWeapon = this.getWeapons().get(new Random().nextInt(getWeapons().size()));
         currentWeapon.setHeight(50);
         currentWeapon.setWidth(50);
         currentWeapon.getCoordinates().setY(this.getCoordinates().getY());
@@ -121,7 +122,12 @@ public class Hero extends Character implements Jumpable, Shooter{
 
             //lateral bound
         }else  if(other instanceof Obstacle obstacle){
-            fall();
+            if (obstacle instanceof TNT tnt) {
+                tnt.burst();
+                fall();
+            } else {
+                fall();
+            }
         } else if (other instanceof TreasureWeapon treasure) {
             treasure.openAnimation();
             if (this.getWeapons().size() != 0) {

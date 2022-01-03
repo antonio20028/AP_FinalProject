@@ -3,24 +3,24 @@ package iiitd.ac.ap_group17.willhero;
 import iiitd.ac.ap_group17.willhero.data.TableData;
 import iiitd.ac.ap_group17.willhero.models.*;
 import javafx.animation.*;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 
-import javafx.scene.input.KeyEvent;
-import javafx.event.EventHandler;
+import javax.management.timer.Timer;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
+import java.util.TimerTask;
 
 public class GameScreenController {
 
@@ -39,35 +39,30 @@ public class GameScreenController {
     public static TableData currentGame;
 
     private static ArrayList<Island> islands;
-    private ArrayList<CoinSet> coins;
+    private static ArrayList<CoinSet> coins;
     private static ArrayList<Orc> orcs;
     private static ArrayList<Treasure<Weapon>> treasureWeapons;
-    private ArrayList<Treasure<Coin>>  treasureCoin;
-
-    static boolean flag;
-    static MenuAnimationController menuAnimationController = new MenuAnimationController();
+    private static ArrayList<Treasure<Coin>>  treasureCoins;
+    private static ArrayList<Obstacle> obstacles;
 
     public static Hero hero;
 
     @FXML
     public static AnchorPane gameScreen;
 
-    private FloatingIsland floatingIsland;
+
     private static FallingPlatform fallingPlatform;
-    private ColliderThread thread;
 
     private Label txtHeroPosition;
 
     public void initialize() {
         hero = new Hero("/assets/helmet/player.png");
-        floatingIsland = new FloatingIsland();
         fallingPlatform = new FallingPlatform();
-        txtHeroPosition = new Label("0");
-        flag = true;
+        txtHeroPosition = new Label(String.valueOf(hero.getPosition()));
         islands = new ArrayList<>();
         orcs = new ArrayList<>();
         coins = new ArrayList<>();
-        treasureCoin = new ArrayList<>();
+        treasureCoins = new ArrayList<>();
         treasureWeapons = new ArrayList<>();
     }
 
@@ -75,15 +70,19 @@ public class GameScreenController {
     public void initGameElements(TableData data, AnchorPane scene) {
         currentGame = data;
         HomeApplication.colliderThread.run();
+        loadGreenOrc();
+        loadRedOrc();
+        loadTNT();
+        loadTreasureChest();
         hero = data.getHero();
         islands = data.getIslands();
         orcs = data.getOrcs();
         coins = data.getCoins();
         treasureWeapons = data.getTreasureWeapons();
-        treasureCoin = data.getTreasureCoin();
+        treasureCoins = data.getTreasureCoin();
         fallingPlatform = data.getFallingPlatform();
+        obstacles = data.getObstacles();
         gameScreen = scene;
-        txtHeroPosition.setText("0");
         gameScreen.getScene().setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -93,6 +92,7 @@ public class GameScreenController {
                             moveIslands();
                             moveOrcs();
                             moveTreasures();
+                            moveObstacles();
                             updatePositionLabel(1);
                             if (hero.getWeapons().size() != 0)  {
                                 hero.useWeapon();
@@ -117,7 +117,7 @@ public class GameScreenController {
     @FXML
     protected  void btnSaveClicked() throws IOException {
         UIAnimationControl.startButtonIllusionAnimation(btnSave, 40, 40);
-        //currentGame.update(Game.hero, HomeController.islands, HomeController.coins);
+        currentGame.update(hero, islands, coins, fallingPlatform, treasureWeapons, treasureCoins, orcs, obstacles);
         currentGame.write();
     }
 
@@ -148,6 +148,7 @@ public class GameScreenController {
         }
     }
 
+
     public void moveIslands() {
         islands.forEach(Island::move);
         for (Island i: islands) {
@@ -169,11 +170,30 @@ public class GameScreenController {
 
     public void moveTreasures() {
         treasureWeapons.forEach(Treasure::move);
+        treasureCoins.forEach(Treasure::move);
+
         for (Treasure treasure: treasureWeapons){
             if (treasure.getPane().getLayoutX() == gameScreen.getBoundsInParent().getMinX()) {
                 treasure.getPane().setLayoutX(gameScreen.getBoundsInParent().getMaxX() - 100);
             }
         }
+
+        for (Treasure treasure: treasureCoins){
+            if (treasure.getPane().getLayoutX() == gameScreen.getBoundsInParent().getMinX()) {
+                treasure.getPane().setLayoutX(gameScreen.getBoundsInParent().getMaxX() - 100);
+            }
+        }
+    }
+
+
+    public void moveObstacles() {
+        obstacles.forEach(Obstacle::move);
+        for (Obstacle ob: obstacles){
+            if (ob.getPane().getLayoutX() == gameScreen.getBoundsInParent().getMinX()) {
+                ob.getPane().setLayoutX(gameScreen.getBoundsInParent().getMaxX() - 100);
+            }
+        }
+
     }
 
     public static void checkCollisions(){
@@ -183,6 +203,9 @@ public class GameScreenController {
         Island tmp = null;
         Orc orc = null;
         TreasureWeapon treasureWeapon = null;
+        TreasureCoin treasureCoin = null;
+        Obstacle obstacle = null;
+        
 
         for (Island i: islands) {
             if (hero.onCollisionWith(i)){
@@ -214,12 +237,27 @@ public class GameScreenController {
         }
 
         //for Treasures
-        for(Treasure treasure: treasureWeapons){
+        for(Treasure<Weapon> treasure: treasureWeapons){
             if (hero.onCollisionWith(treasure)) {
                 treasureWeapon = (TreasureWeapon) treasure;
                 collisions[2] = true;
             }
         }
+
+        for(Treasure<Coin> treasure: treasureCoins){
+            if (hero.onCollisionWith(treasure)) {
+                treasureCoin = (TreasureCoin) treasure;
+                collisions[4] = true;
+            }
+        }
+
+        for(Obstacle obs: obstacles) {
+            if (hero.onCollisionWith(obs)) {
+                collisions[5] = true;
+                obstacle = obs;
+            }
+        }
+
 
         if (collisions[0]) {
             hero.onCollision(tmp);
@@ -239,6 +277,14 @@ public class GameScreenController {
             assert orc != null;
             orc.onCollision(hero.getWeapon());
         }
+
+        if (collisions[4]) {
+            hero.onCollision(treasureCoin);
+        }
+
+        if(collisions[5]) {
+            hero.onCollision(obstacle);
+        }
     }
 
 
@@ -246,42 +292,139 @@ public class GameScreenController {
         Thread thread = new Thread() {
             @Override
             public void run() {
-                try {
-                    System.out.println("Hello Pedro");
-
-                    sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                Timeline timeline = new Timeline();
+                KeyFrame frame = new KeyFrame(Duration.millis(9000), actionEvent -> {
+                    RedOrc redOrc = new RedOrc();
+                    redOrc.setWidth(80);
+                    redOrc.getCoordinates().setY(hero.getCoordinates().getY());
+                    redOrc.getCoordinates().setX(islands.get(1 + new Random().nextInt(islands.size())%2).getPane().getLayoutX());
+                    orcs.add(redOrc);
+                    redOrc.mountImage();
+                    redOrc.jump();
+                    gameScreen.getChildren().add(redOrc.getPane());
+                });
+                timeline.getKeyFrames().add(frame);
+                timeline.setCycleCount(Timeline.INDEFINITE);
+                timeline.play();
             }
         };
         thread.start();
-
     }
 
     public void loadGreenOrc() {
-
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                Timeline timeline = new Timeline();
+                KeyFrame frame = new KeyFrame(Duration.millis(9000), actionEvent -> {
+                    GreenOrc redOrc = new GreenOrc();
+                    redOrc.setWidth(80);
+                    redOrc.getCoordinates().setY(hero.getCoordinates().getY());
+                    redOrc.getCoordinates().setX(islands.get(new Random().nextInt(islands.size())).getPane().getLayoutX());
+                    orcs.add(redOrc);
+                    redOrc.mountImage();
+                    redOrc.jump();
+                    gameScreen.getChildren().add(redOrc.getPane());
+                });
+                timeline.getKeyFrames().add(frame);
+                timeline.setCycleCount(Timeline.INDEFINITE);
+                timeline.play();
+            }
+        };
+        thread.start();
     }
 
     public void loadBoss() {
-
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                Timeline timeline = new Timeline();
+                KeyFrame frame = new KeyFrame(Duration.millis(9000), actionEvent -> {
+                    RedOrc redOrc = new RedOrc();
+                    redOrc.setWidth(80);
+                    redOrc.getCoordinates().setY(hero.getCoordinates().getY());
+                    redOrc.getCoordinates().setX(islands.get(1 + new Random().nextInt(islands.size())%2).getPane().getLayoutX());
+                    orcs.add(redOrc);
+                    redOrc.mountImage();
+                    redOrc.jump();
+                    gameScreen.getChildren().add(redOrc.getPane());
+                });
+                timeline.getKeyFrames().add(frame);
+                timeline.setCycleCount(Timeline.INDEFINITE);
+                timeline.play();
+            }
+        };
+        thread.start();
     }
 
     public void loadTNT() {
-
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                Timeline timeline = new Timeline();
+                KeyFrame frame = new KeyFrame(Duration.millis(10000), actionEvent -> {
+                    TNT tnt = new TNT();
+                    tnt.setWidth(80);
+                    tnt.setHeight(60);
+                    tnt.getCoordinates().setY(335);
+                    tnt.getCoordinates().setX(islands.get(new Random().nextInt(islands.size())).getPane().getLayoutX());
+                    obstacles.add(tnt);
+                    tnt.mountImage();
+                    gameScreen.getChildren().add(tnt.getPane());
+                });
+                timeline.getKeyFrames().add(frame);
+                timeline.setCycleCount(Timeline.INDEFINITE);
+                timeline.play();
+            }
+        };
+        thread.start();
     }
 
     public void loadTreasureChest() {
-
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                Timeline timeline = new Timeline();
+                KeyFrame frame = new KeyFrame(Duration.millis(10000), actionEvent -> {
+                    TreasureWeapon treas = new TreasureWeapon();
+                    treas.setHeight(60);
+                    treas.setWidth(100);
+                    treas.getCoordinates().setY(335);
+                    treas.getCoordinates().setX(islands.get(new Random().nextInt(islands.size())).getPane().getLayoutX());
+                    treasureWeapons.add(treas);
+                    treas.mountImage();
+                    gameScreen.getChildren().add(treas.getPane());
+                });
+                timeline.getKeyFrames().add(frame);
+                timeline.setCycleCount(Timeline.INDEFINITE);
+                timeline.play();
+            }
+        };
+        thread.start();
     }
 
     private void loadCoins() {
-        for(int i = 0; i < 1; i++) {
-            CoinSet coinSet = new CoinSet();
-            coinSet.setLayoutX(new Random().nextDouble(400, 500));
-            coinSet.setLayoutY(new Random().nextDouble(270, 300));
-            gameScreen.getChildren().add(coinSet);
-        }
+
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                Timeline timeline = new Timeline();
+                KeyFrame frame = new KeyFrame(Duration.millis(9000), actionEvent -> {
+                    RedOrc redOrc = new RedOrc();
+                    redOrc.setWidth(80);
+                    redOrc.getCoordinates().setY(hero.getCoordinates().getY());
+                    redOrc.getCoordinates().setX(islands.get(1 + new Random().nextInt(islands.size())%2).getPane().getLayoutY());
+                    orcs.add(redOrc);
+                    redOrc.mountImage();
+                    redOrc.jump();
+                    gameScreen.getChildren().add(redOrc.getPane());
+                });
+                timeline.getKeyFrames().add(frame);
+                timeline.setCycleCount(Timeline.INDEFINITE);
+                timeline.play();
+            }
+        };
+        thread.start();
 
     }
 

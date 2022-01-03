@@ -29,23 +29,25 @@ public class TableData implements Serializable {
     private ArrayList<Orc> orcs;
     private ArrayList<Treasure<Weapon>> treasureWeapons;
     private ArrayList<Treasure<Coin>>  treasureCoin;
+    private ArrayList<Obstacle> obstacles;
 
     static boolean flag;
     static MenuAnimationController menuAnimationController = new MenuAnimationController();
     private Hero hero;
     private FallingPlatform fallingPlatform;
 
-    private String name;
-    private String date;
+    private final String name;
+    private final String date;
 
-    public TableData() {
+
+    public TableData() {}
+
+    {
         LocalDateTime dateTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E, MMM dd yyyy HH:mm");
         date = dateTime.format(formatter);
         name = "Game saved on " + " " + date;
-    }
 
-    {
         hero = new Hero("/assets/helmet/player.png");
         fallingPlatform = new FallingPlatform();
         flag = true;
@@ -54,6 +56,7 @@ public class TableData implements Serializable {
         coins = new ArrayList<>();
         treasureCoin = new ArrayList<>();
         treasureWeapons = new ArrayList<>();
+        obstacles = new ArrayList<>();
     }
 
     public TableData(AnchorPane screen) {
@@ -161,7 +164,7 @@ public class TableData implements Serializable {
     }
 
     public void update(Hero hero, ArrayList<Island> islands, ArrayList<CoinSet> coins,
-    FallingPlatform fallingPlatform, ArrayList<Treasure<Weapon>> treasureWeapons, ArrayList<Treasure<Coin>> treasureCoin, ArrayList<Orc> orcs) {
+    FallingPlatform fallingPlatform, ArrayList<Treasure<Weapon>> treasureWeapons, ArrayList<Treasure<Coin>> treasureCoin, ArrayList<Orc> orcs, ArrayList<Obstacle> obstacles) {
         this.islands = islands;
         this.coins = coins;
         this.hero = hero;
@@ -169,8 +172,9 @@ public class TableData implements Serializable {
         this.treasureCoin = treasureCoin;
         this.treasureWeapons = treasureWeapons;
         this.orcs = orcs;
-
+        this.obstacles = obstacles;
     }
+
 
     public ArrayList<CoinSet> getCoins() {
         return coins;
@@ -214,5 +218,9 @@ public class TableData implements Serializable {
 
     public String getDate() {
         return date;
+    }
+
+    public ArrayList<Obstacle> getObstacles() {
+        return obstacles;
     }
 }
